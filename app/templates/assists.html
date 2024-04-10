@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Assists</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Assisting Player</th>
+            <th>Goal ID</th>
+            <th>Goal Scorer</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for assist in assists %}
+        <tr>
+            <td>{{ assist.player.p_name }}</td>
+            <td>{{ assist.goal }}</td>
+            <td>{{ assist.event.player.p_name }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

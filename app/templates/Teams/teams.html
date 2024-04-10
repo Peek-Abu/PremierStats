@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Teams</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Team Name</th>
+            <th>Manager</th>
+            <th>Nationality</th>
+            <th>Founded</th>
+            <th>Total Titles</th>
+            <th>Historical Performance</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for team in teams %}
+        <tr>
+            <td>{{ team.t_name }}</td>
+            <td>{{ team.manager.name }}</td> <!-- Assuming you join/load the manager -->
+            <td>{{ team.nationality }}</td>
+            <td>{{ team.founded }}</td>
+            <td>{{ team.total_titles }}</td>
+            <td>{{ team.historical_performance }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

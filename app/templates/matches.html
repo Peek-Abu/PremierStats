@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Matches</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Home</th>
+            <th>Away</th>
+            <th>Scoreline</th>
+            <th>Attendance</th>
+            <th>Venue</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for match in matches %}
+        <tr>
+            <td>{{ match.game_date }}</td>
+            <td>{{ match.home }}</td>
+            <td>{{ match.away }}</td>
+            <td>{{ match.scoreline }}</td>
+            <td>{{ match.attendance }}</td>
+            <td>{{ match.stadium.name }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
