@@ -28,6 +28,15 @@ CREATE TABLE Manager (
     titles_managed INT
 );
 
+CREATE TABLE League (
+    league_name VARCHAR(64) PRIMARY KEY,
+    country_name VARCHAR(64),
+    founded DATE,
+    total_teams INT,
+    total_games INT,
+    FOREIGN KEY (country) REFERENCES Country(c_name) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
 CREATE TABLE Team (
     t_name VARCHAR(64) PRIMARY KEY,
     manager INT,
@@ -35,8 +44,12 @@ CREATE TABLE Team (
     founded DATE,
     total_titles INT,
     historical_performance INT,
+    home_stadium INT,
+    league_name VARCHAR(64),
     FOREIGN KEY (manager) REFERENCES Manager(manager_id) ON DELETE RESTRICT ON UPDATE CASCADE,
-    FOREIGN KEY (nationality) REFERENCES Country(c_name) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (nationality) REFERENCES Country(c_name) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (home_stadium) REFERENCES Stadium(stadium_id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    FOREIGN KEY (league_name) REFERENCES League(league_name) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Odds (
@@ -82,14 +95,14 @@ CREATE TABLE Player (
     FOREIGN KEY (player_stats) REFERENCES Stats(stats_id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
-
-
 CREATE TABLE Event (
     event_id INT PRIMARY KEY,
     match_id INT,
     player_involved INT,
     description VARCHAR(64),
     event_type ENUM ("Goals", "Cards", "Substitutions"),
+    minute INT,
+    FOREIGN KEY (player_involved) REFERENCES Player(player_id) ON DELETE RESTRICT ON UPDATE CASCADE,
     FOREIGN KEY (match_id) REFERENCES Game_Match(match_id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
@@ -100,7 +113,3 @@ CREATE TABLE Assist (
     FOREIGN KEY (assisting_player) REFERENCES Player(player_id) ON DELETE RESTRICT ON UPDATE CASCADE,
     FOREIGN KEY (goal) REFERENCES Event(event_id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
-
-
-
-

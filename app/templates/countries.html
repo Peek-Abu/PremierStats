@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Countries</h2>
+<ul>
+  {% for country in countries %}
+  <li>{{ country.c_name }} - Leagues Hosted: {{ country.leagues_hosted }}</li>
+  {% endfor %}
+</ul>
+{% endblock %}

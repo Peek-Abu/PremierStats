@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Stadiums</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Stadium ID</th>
+      <th>Seats</th>
+      <th>Founded</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for stadium in stadiums %}
+    <tr>
+      <td>{{ stadium.stadium_id }}</td>
+      <td>{{ stadium.seats }}</td>
+      <td>{{ stadium.founded }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
