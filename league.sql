@@ -10,19 +10,20 @@ CREATE TABLE Country (
 CREATE TABLE Referee (
     ref_id INT PRIMARY KEY,
     age int,
-    name VARCHAR(64),
+    name VARCHAR(64) not null,
     games_reffed INT
 );
 
 CREATE TABLE Stadium (
     stadium_id INT PRIMARY KEY,
+    stadium_name varchar(64) not null,
     seats INT,
     founded DATE
 );
 
 CREATE TABLE Manager (
     manager_id INT PRIMARY KEY,
-    name varchar(64),
+    name varchar(64) not null,
     age int,
     years_managing INT,
     titles_managed INT
@@ -39,7 +40,7 @@ CREATE TABLE League (
 
 CREATE TABLE Team (
     t_name VARCHAR(64) PRIMARY KEY,
-    manager INT,
+    manager INT not null,
     nationality VARCHAR(64),
     founded DATE,
     total_titles INT,
@@ -62,10 +63,10 @@ CREATE TABLE Game_Match (
     match_id INT PRIMARY KEY,
     ref INT,
     game_date DATE,
-    venue INT,
-    home VARCHAR(64),
-    away VARCHAR(64),
-    scoreline VARCHAR(64),
+    venue INT not null,
+    home VARCHAR(64) not null,
+    away VARCHAR(64) not null,
+    scoreline VARCHAR(64) not null,
     attendance INT,
     odds INT,
     FOREIGN KEY (home) REFERENCES Team(t_name) ON DELETE RESTRICT ON UPDATE CASCADE,
@@ -84,7 +85,7 @@ CREATE TABLE Stats (
 
 CREATE TABLE Player (
     player_id INT PRIMARY KEY AUTO_INCREMENT,
-    p_name VARCHAR(64), 
+    p_name VARCHAR(64) not null, 
     nationality VARCHAR(64), 
     position VARCHAR(64), 
     age INT, 
@@ -97,13 +98,14 @@ CREATE TABLE Player (
 
 CREATE TABLE Event (
     event_id INT PRIMARY KEY,
-    match_id INT,
-    player_involved INT,
+    match_id INT not null,
+    player_involved INT not null,
     description VARCHAR(64),
     event_type ENUM ("Goals", "Cards", "Substitutions"),
     minute INT,
-    FOREIGN KEY (player_involved) REFERENCES Player(player_id) ON DELETE RESTRICT ON UPDATE CASCADE,
-    FOREIGN KEY (match_id) REFERENCES Game_Match(match_id) ON DELETE RESTRICT ON UPDATE CASCADE
+    event_type ENUM ("Goals", "Cards", "Substitutions") not null,
+    FOREIGN KEY (match_id) REFERENCES Game_Match(match_id) ON DELETE RESTRICT ON UPDATE CASCADE,
+	  FOREIGN KEY (player_involved) REFERENCES Player(player_id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE TABLE Assist (
