@@ -16,7 +16,7 @@
             {% for manager in managers %}
             <tr>
                 <!-- <td>{{ manager.name }}</td> -->
-                <td><a href="{{ url_for('main.manager_details', manager_id=manager.manager_id) }}">
+                <td><a href="{{ url_for('managers.manager_details', manager_id=manager.manager_id) }}">
                     {{ manager.name }}
                 </a></td>
                 <td>{{ manager.age }}</td>
