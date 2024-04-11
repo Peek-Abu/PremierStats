@@ -1,6 +1,7 @@
-from flask import render_template
-from flask import Blueprint
+from flask import render_template, Blueprint, redirect, url_for
 from app.models import Country, Referee, Stadium, Manager, Team, Odds, Match, Stats, Player, Event, Assist
+import app.DAO.managers as manager_dao
+
 app = Blueprint('main', __name__)
 
 @app.route('/', methods=['GET'])
@@ -21,11 +22,6 @@ def Referees():
 def Stadiums():
     all_stadiums = Stadium.query.all()
     return render_template('stadiums.html', stadiums=all_stadiums)
-
-@app.route('/managers')
-def Managers():
-    all_managers = Manager.query.all()
-    return render_template('managers.html', managers=all_managers)
 
 @app.route('/teams')
 def Teams():
@@ -61,3 +57,44 @@ def Events():
 def Assists():
     all_assists = Assist.query.all()
     return render_template('assists.html', assists=all_assists)
+
+@app.route('/managers')
+def show_managers():
+    try:
+        all_managers = Manager.query.all()
+        return render_template('Managers/managers.html', managers=all_managers)
+    except Exception as e:
+        return str(e)
+
+@app.route('/managers/<int:manager_id>')
+def manager_details(manager_id):
+    try:
+        manager = manager_dao.get_manager(manager_id)
+        return render_template('Managers/manager_details.html', manager=manager)
+    except Exception as e:
+        return str(e)
+
+@app.route('/update_manager/<int:manager_id>', methods=['POST'])
+def update_manager(manager_id):
+    try:
+        manager_dao.update_manager(manager_id)
+        return redirect(url_for('main.show_managers'))
+    except Exception as e:
+        return str(e)
+
+@app.route('/add_manager', methods=['POST'])
+def add_manager():
+    try:
+        manager_dao.create_manager()
+        return redirect(url_for('main.show_managers'))
+    except Exception as e:
+        return str(e)
+    
+@app.route('/delete_manager/<int:manager_id>', methods=['POST'])
+def delete_manager(manager_id):
+    print(manager_id)
+    try:
+        manager_dao.delete_manager(manager_id)
+        return redirect(url_for('main.show_managers'))
+    except Exception as e:
+        return str(e)

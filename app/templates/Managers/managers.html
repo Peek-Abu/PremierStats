@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Managers</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Years Managing</th>
+                <th>Titles Managed</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for manager in managers %}
+            <tr>
+                <!-- <td>{{ manager.name }}</td> -->
+                <td><a href="{{ url_for('main.manager_details', manager_id=manager.manager_id) }}">
+                    {{ manager.name }}
+                </a></td>
+                <td>{{ manager.age }}</td>
+                <td>{{ manager.years_managing }}</td>
+                <td>{{ manager.titles_managed }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- Add Manager Button -->
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addManagerForm" aria-expanded="false" aria-controls="addManagerForm">
+        +
+    </button>
+    
+    <!-- Collapsible Add Manager Form -->
+    <div class="collapse" id="addManagerForm">
+        <div class="card card-body">
+            <form action="/add_manager" method="post">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name:</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="age" class="form-label">Age:</label>
+                    <input type="number" class="form-control" id="age" name="age" required>
+                </div>
+                <div class="mb-3">
+                    <label for="years_managing" class="form-label">Years Managing:</label>
+                    <input type="number" class="form-control" id="years_managing" name="years_managing" required>
+                </div>
+                <div class="mb-3">
+                    <label for="titles_managed" class="form-label">Titles Managed:</label>
+                    <input type="number" class="form-control" id="titles_managed" name="titles_managed" required>
+                </div>
+                <button type="submit" class="btn btn-success">Add Manager</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
