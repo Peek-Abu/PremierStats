@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container">
     <h2>Manager Details</h2>
-    <form class="d-inline" action="{{ url_for('main.update_manager', manager_id=manager.manager_id) }}" method="post">
+    <form class="d-inline" action="{{ url_for('managers.update_manager', manager_id=manager.manager_id) }}" method="post">
         <div class="mb-3">
             <label for="name" class="form-label">Name:</label>
             <input type="text" class="form-control" id="name" name="name" value="{{ manager.name }}" required>
@@ -22,7 +22,7 @@
         </div>
         <button type="submit" class="btn btn-primary">Update Manager</button>
     </form>
-    <form class="d-inline" action="{{ url_for('main.delete_manager', manager_id=manager.manager_id) }}" method="post">
+    <form class="d-inline" action="{{ url_for('managers.delete_manager', manager_id=manager.manager_id) }}" method="post">
         <input type="hidden" name="_method" value="DELETE">
         <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete Manager</button>
     </form>
