@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Country Details</h2>
+    <div class="mb-3">
+        <h4>Country Name: {{ country.c_name }}</h4>
+    </div>
+    <div class="mb-3">
+        <h4>Leagues Hosted: {{ country.leagues_hosted }}</h4>
+    </div>
+    <a href="/countries/edit/{{ country.c_name }}" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+    <form action="/delete_country/{{ country.c_name }}" method="post" class="d-inline">
+        <input type="hidden" name="_method" value="DELETE">
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
+    </form>
+</div>
+{% endblock %}

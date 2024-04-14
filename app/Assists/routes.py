@@ -11,10 +11,18 @@ def show_assists():
         return str(e)
 
 @app.route('/assists/<int:assist_id>')
-def assists_details(assist_id):
+def assist_details(assist_id):
     try:
         assist = assist_dao.getAssist(assist_id)
-        return render_template('Managers/manager_details.html', assist=assist)
+        return render_template('Assists/assist_details.html', assist=assist)
+    except Exception as e:
+        return str(e)
+
+@app.route('/assists/edit/<int:assist_id>')
+def assist_edit(assist_id):
+    try:
+        assist = assist_dao.getAssist(assist_id)
+        return render_template('Assists/assist_edit.html', assist=assist)
     except Exception as e:
         return str(e)
 
@@ -35,7 +43,7 @@ def add_assist():
         return str(e)
     
 @app.route('/delete_assist/<int:assist_id>', methods=['POST'])
-def delete_manager(assist_id):
+def delete_assist(assist_id):
     try:
         assist_dao.deleteAssist(assist_id)
         return redirect(url_for('assists.show_assists'))

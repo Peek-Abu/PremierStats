@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Edit Stadium</h2>
+    <form action="/update_stadium/{{ stadium.stadium_id }}" method="post">
+        <div class="mb-3">
+            <label for="stadium_id" class="form-label">Stadium Id:</label>
+            <input type="text" class="form-control" id="stadium_id" name="stadium_id" value="{{ stadium.stadium_id }}" readonly>
+        </div>
+        <div class="mb-3">
+            <label for="name" class="form-label">Stadium Name:</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ stadium.name }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="seats" class="form-label">Seats:</label>
+            <input type="number" class="form-control" id="seats" name="seats" value="{{ stadium.seats }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="founded" class="form-label">Founded:</label>
+            <input type="date" class="form-control" id="founded" name="founded" value="{{ stadium.founded }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Stadium</button>
+        <form action="/delete_stadium/{{ stadium.stadium_id }}" method="post" class="d-inline">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
+        </form>
+    </form>
+    
+</div>
+{% endblock %}

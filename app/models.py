@@ -46,8 +46,8 @@ class Team(db.Model):
 class Odds(db.Model):
     __tablename__ = 'Odds'
     odds_id = db.Column(db.Integer, primary_key=True)
-    under_odds = db.Column(db.Integer) # Should this be a float?
-    over_odds = db.Column(db.Integer) # Should this be a float?
+    under_odds = db.Column(db.Integer)
+    over_odds = db.Column(db.Integer)
 
 class Match(db.Model):
     __tablename__ = 'Match'

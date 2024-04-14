@@ -10,18 +10,27 @@ def show_teams():
     except Exception as e:
         return str(e)
     
-@app.route('/teams/<team_id>')
-def team_details(team_id):
+@app.route('/teams/<team_name>')
+def team_details(team_name):
+    print(team_name)
     try:
-        team = team_dao.getTeam(team_id)
-        return render_template('Managers/manager_details.html', team=team)
+        team = team_dao.getTeam(team_name)
+        return render_template('Teams/team_details.html', team=team)
     except Exception as e:
         return str(e)
 
-@app.route('/update_team/<team_id>', methods=['POST'])
-def update_team(team_id):
+@app.route('/teams/edit/<team_name>')
+def team_edit(team_name):
     try:
-        team_dao.updateTeam(team_id)
+        team = team_dao.getTeam(team_name)
+        return render_template('Teams/team_edit.html', team=team)
+    except Exception as e:
+        return str(e)
+
+@app.route('/update_team/<t_name>', methods=['POST'])
+def update_team(t_name):
+    try:
+        team_dao.updateTeam(t_name)
         return redirect(url_for('teams.show_teams'))
     except Exception as e:
         return str(e)
@@ -34,10 +43,10 @@ def add_team():
     except Exception as e:
         return str(e)
     
-@app.route('/delete_team/<team_id>', methods=['POST'])
-def delete_match(team_id):
+@app.route('/delete_team/<t_name>', methods=['POST'])
+def delete_team(t_name):
     try:
-        team_dao.deleteTeam(team_id)
+        team_dao.deleteTeam(t_name)
         return redirect(url_for('teams.show_teams'))
     except Exception as e:
         return str(e)

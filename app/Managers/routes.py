@@ -18,6 +18,14 @@ def manager_details(manager_id):
     except Exception as e:
         return str(e)
 
+@app.route('/managers/edit/<int:manager_id>')
+def manager_edit(manager_id):
+    try:
+        manager = manager_dao.get_manager(manager_id)
+        return render_template('Managers/manager_edit.html', manager=manager)
+    except Exception as e:
+        return str(e)
+
 @app.route('/update_manager/<int:manager_id>', methods=['POST'])
 def update_manager(manager_id):
     try:

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Odds Details</h2>
+    <div class="mb-3">
+        <label class="form-label">Odds ID:</label>
+        <p>{{ odds.odds_id }}</p>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Under Odds:</label>
+        <p>{{ odds.under_odds }}</p>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Over Odds:</label>
+        <p>{{ odds.over_odds }}</p>
+    </div>
+</div>
+{% endblock %}

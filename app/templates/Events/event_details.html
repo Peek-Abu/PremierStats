@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Event Details</h2>
+    <div class="mb-3">
+        <label for="match_id" class="form-label">Match ID:</label>
+        <p id="match_id">{{ event.match_id }}</p>
+    </div>
+    <div class="mb-3">
+        <label for="player_involved" class="form-label">Player Involved:</label>
+        <p id="player_involved">{{ event.player_involved }}</p>
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">Description:</label>
+        <p id="description">{{ event.description }}</p>
+    </div>
+    <div class="mb-3">
+        <label for="event_type" class="form-label">Event Type:</label>
+        <p id="event_type">{{ event.event_type }}</p>
+    </div>
+    <div class="mb-3">
+        <label for="minute" class="form-label">Minute:</label>
+        <p id="minute">{{ event.minute }}</p>
+    </div>
+    <a href="/events/edit/{{ event.event_id }}" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+    <form action="/delete_event/{{ event.event_id }}" method="post" class="d-inline">
+        <input type="hidden" name="_method" value="DELETE">
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Referee Details</h2>
+    <div class="mb-3">
+        <label class="form-label">Referee ID:</label>
+        <p>{{ referee.ref_id }}</p>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Name:</label>
+        <p>{{ referee.name }}</p>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Age:</label>
+        <p>{{ referee.age }}</p>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Games Reffed:</label>
+        <p>{{ referee.games_reffed }}</p>
+    </div>
+</div>
+{% endblock %}

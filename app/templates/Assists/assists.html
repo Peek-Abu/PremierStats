@@ -1,23 +1,49 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Assists</h2>
-<table>
-    <thead>
-        <tr>
-            <th>Assisting Player</th>
-            <th>Goal ID</th>
-            <th>Goal Scorer</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for assist in assists %}
-        <tr>
-            <td>{{ assist.player.p_name }}</td>
-            <td>{{ assist.goal }}</td>
-            <td>{{ assist.event.player.p_name }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="container">
+    <h2>Assists</h2>
+    <table class="table show-all">
+        <thead>
+            <tr>
+                <th>Assisting Player</th>
+                <th>Goal Event</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for assist in assists %}
+            <tr>
+                <td><a href="/players/{{ assist.player.player_id }}">{{ assist.player.p_name }}</a></td>
+                <td><a href="/events/{{ assist.goal }}">{{ assist.goal }}</a></td>
+                <td>
+                    <a href="/assists/edit/{{ assist.assist_id }}" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+                    <form action="/delete_assist/{{ assist.assist_id }}" method="post" class="d-inline">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addAssistForm" aria-expanded="false" aria-controls="addAssistForm">
+        Add Assist
+    </button>
+
+    <div class="collapse" id="addAssistForm">
+        <div class="card card-body">
+            <form action="/add_assist" method="post">
+                <div class="mb-3">
+                    <label for="assisting_player" class="form-label">Assisting Player ID:</label>
+                    <input type="number" class="form-control" id="assisting_player" name="assisting_player" required>
+                </div>
+                <div class="mb-3">
+                    <label for="goal" class="form-label">Goal Event ID:</label>
+                    <input type="number" class="form-control" id="goal" name="goal" required>
+                </div>
+                <button type="submit" class="btn btn-success">Add Assist</button>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

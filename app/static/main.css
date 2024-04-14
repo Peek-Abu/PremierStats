@@ -2,3 +2,7 @@ a {
   color: #000;
   text-decoration: none;
 }
+
+.show-all td:last-child {
+  border-bottom: none;
+}

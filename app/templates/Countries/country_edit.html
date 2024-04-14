@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Edit Country</h2>
+    <form action="{{ url_for('countries.update_country', c_name=country.c_name) }}" method="post">
+        <div class="mb-3">
+            <label for="c_name" class="form-label">Country Name:</label>
+            <input type="text" class="form-control" id="c_name" name="c_name" value="{{ country.c_name }}" readonly>
+        </div>
+        <div class="mb-3">
+            <label for="leagues_hosted" class="form-label">Leagues Hosted:</label>
+            <input type="number" class="form-control" id="leagues_hosted" name="leagues_hosted" value="{{ country.leagues_hosted }}" required>
+        </div>
+        <!-- Add more fields as necessary -->
+        <button type="submit" class="btn btn-primary">Update Country</button>
+    </form>
+</div>
+{% endblock %}

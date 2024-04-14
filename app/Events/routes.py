@@ -6,7 +6,7 @@ app = Blueprint('events', __name__)
 def show_events():
     try:
         all_events = event_dao.getAllEvents()
-        return render_template('events.html', events=all_events)
+        return render_template('Events/events.html', events=all_events)
     except Exception as e:
         return str(e)
     
@@ -14,7 +14,15 @@ def show_events():
 def event_details(event_id):
     try:
         event = event_dao.getEvent(event_id)
-        return render_template('Managers/manager_details.html', event=event)
+        return render_template('Events/event_details.html', event=event)
+    except Exception as e:
+        return str(e)
+
+@app.route('/events/edit/<int:event_id>')
+def event_edit(event_id):
+    try:
+        event = event_dao.getEvent(event_id)
+        return render_template('Events/event_edit.html', event=event)
     except Exception as e:
         return str(e)
 

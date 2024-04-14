@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Events</h2>
+    <table class="table show-all">
+        <thead>
+            <tr>
+                <th>Player Involved</th>
+                <th>Description</th>
+                <th>Event Type</th>
+                <th>Minute</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events %}
+            <tr>
+                <td><a href="/players/{{event.player.player_id}}">{{ event.player.p_name }}</a></td>
+                <td>{{ event.description }}</td>
+                <td>{{ event.event_type }}</td>
+                <td>{{ event.minute }} </td>
+                <td>
+                    <a href="/events/edit/{{ event.event_id }}" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+                    <form action="/delete_event/{{ event.event_id }}" method="post" class="d-inline">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addEventForm" aria-expanded="false" aria-controls="addEventForm">
+        Add Event
+    </button>
+    
+    
+    <div class="collapse" id="addEventForm">
+        <div class="card card-body">
+            <form action="/add_event" method="post">
+                <div class="mb-3">
+                    <label for="match_id" class="form-label">Match ID:</label>
+                    <input type="number" class="form-control" id="match_id" name="match_id" required>
+                </div>
+                <div class="mb-3">
+                    <label for="player_involved" class="form-label">Player Involved ID:</label>
+                    <input type="number" class="form-control" id="player_involved" name="player_involved" required>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description:</label>
+                    <input type="text" class="form-control" id="description" name="description">
+                </div>
+                <div class="mb-3">
+                    <label for="event_type" class="form-label">Event Type:</label>
+                    <select class="form-control" id="event_type" name="event_type" required>
+                        <option value="Goals">Goals</option>
+                        <option value="Cards">Cards</option>
+                        <option value="Substitutions">Substitutions</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="minute" class="form-label">Minute:</label>
+                    <input type="number" class="form-control" id="minute" name="minute" required>
+                </div>
+                <button type="submit" class="btn btn-success">Add Event</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

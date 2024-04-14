@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Matches</h2>
+    <table class="table show-all">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Home</th>
+                <th>Away</th>
+                <th>Scoreline</th>
+                <th>Attendance</th>
+                <th>Venue</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for match in matches %}
+            <tr>
+                <td>{{ match.game_date }}</td>
+                <td><a href="/teams/{{ match.home }}">{{ match.home }}</a></td>
+                <td><a href="/teams/{{ match.away }}">{{ match.away }}</a></td>
+                <td>{{ match.scoreline }}</td>
+                <td>{{ match.attendance }}</td>
+                <td><a href="/stadiums/{{ match.stadium.stadium_id }}">{{ match.stadium.name }}</a></td>
+                <td>
+                    <a href="/matches/edit/{{ match.match_id }}" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+                    <form action="/delete_match/{{ match.match_id }}" method="post" class="d-inline">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addMatchForm" aria-expanded="false" aria-controls="addMatchForm">
+        Add Match
+    </button>
+    
+    <div class="collapse" id="addMatchForm">
+        <div class="card card-body">
+            <form action="/add_match" method="post">
+                <div class="mb-3">
+                    <label for="ref" class="form-label">Referee ID:</label>
+                    <input type="number" class="form-control" id="ref" name="ref" required>
+                </div>
+                <div class="mb-3">
+                    <label for="game_date" class="form-label">Game Date:</label>
+                    <input type="date" class="form-control" id="game_date" name="game_date" required>
+                </div>
+                <div class="mb-3">
+                    <label for="venue" class="form-label">Venue ID:</label>
+                    <input type="number" class="form-control" id="venue" name="venue" required>
+                </div>
+                <div class="mb-3">
+                    <label for="home" class="form-label">Home Team Name:</label>
+                    <input type="text" class="form-control" id="home" name="home" required>
+                </div>
+                <div class="mb-3">
+                    <label for="away" class="form-label">Away Team Name:</label>
+                    <input type="text" class="form-control" id="away" name="away" required>
+                </div>
+                <div class="mb-3">
+                    <label for="scoreline" class="form-label">Scoreline:</label>
+                    <input type="text" class="form-control" id="scoreline" name="scoreline">
+                </div>
+                <div class="mb-3">
+                    <label for="attendance" class="form-label">Attendance:</label>
+                    <input type="number" class="form-control" id="attendance" name="attendance">
+                </div>
+                <div class="mb-3">
+                    <label for="odds_id" class="form-label">Odds ID:</label>
+                    <input type="number" class="form-control" id="odds_id" name="odds_id" required>
+                </div>
+                <button type="submit" class="btn btn-success">Add Match</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

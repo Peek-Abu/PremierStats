@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Odds</h2>
+    <table class="table show-all">
+        <thead>
+            <tr>
+                <th>Odds ID</th>
+                <th>Under Odds</th>
+                <th>Over Odds</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for odd in odds %}
+            <tr>
+                <td>{{ odd.odds_id }}</td>
+                <td>{{ odd.under_odds }}</td>
+                <td>{{ odd.over_odds }}</td>
+                <td>
+                    <a href="/odds/edit/{{ odd.odds_id }}" class="btn btn-warning"><i class="fa fa-pencil d-inline"></i></a>
+                    <form action="/delete_odds/{{ odd.odds_id }}" method="post" class="d-inline">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+     <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addOddsForm" aria-expanded="false" aria-controls="addOddsForm">
+        Add Odds
+    </button>
+
+     <div class="collapse" id="addOddsForm">
+        <div class="card card-body">
+            <form action="/add_odds" method="post">
+                <div class="mb-3">
+                    <label for="under_odds" class="form-label">Under Odds:</label>
+                    <input type="number" class="form-control" id="under_odds" name="under_odds" required>
+                </div>
+                <div class="mb-3">
+                    <label for="over_odds" class="form-label">Over Odds:</label>
+                    <input type="number" class="form-control" id="over_odds" name="over_odds" required>
+                </div>
+                <button type="submit" class="btn btn-success">Add Odds</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

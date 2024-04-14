@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Match Details</h2>
+    <form class="d-inline" action="{{ url_for('matches.update_match', match_id=match.match_id) }}" method="post">
+        <div class="mb-3">
+            <label for="ref" class="form-label">Referee ID:</label>
+            <input type="number" class="form-control" id="ref" name="ref" value="{{ match.ref }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="game_date" class="form-label">Game Date:</label>
+            <input type="date" class="form-control" id="game_date" name="game_date" value="{{ match.game_date }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="venue" class="form-label">Venue ID:</label>
+            <input type="number" class="form-control" id="venue" name="venue" value="{{ match.venue }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="home" class="form-label">Home Team Name:</label>
+            <input type="text" class="form-control" id="home" name="home" value="{{ match.home }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="away" class="form-label">Away Team Name:</label>
+            <input type="text" class="form-control" id="away" name="away" value="{{ match.away }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="scoreline" class="form-label">Scoreline:</label>
+            <input type="text" class="form-control" id="scoreline" name="scoreline" value="{{ match.scoreline }}">
+        </div>
+        <div class="mb-3">
+            <label for="attendance" class="form-label">Attendance:</label>
+            <input type="number" class="form-control" id="attendance" name="attendance" value="{{ match.attendance }}">
+        </div>
+        <div class="mb-3">
+            <label for="odds_id" class="form-label">Odds ID:</label>
+            <input type="number" class="form-control" id="odds_id" name="odds_id" value="{{ match.odds_id }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Match</button>
+        <form class="d-inline" action="{{ url_for('matches.delete_match', match_id=match.match_id) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
+        </form>
+    </form>
+</div>
+{% endblock %}

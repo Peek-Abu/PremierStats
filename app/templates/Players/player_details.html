@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Player Details</h2>
+    <div class="mb-3">
+        <label class="form-label">Name:</label>
+        <p>{{ player.p_name }}</p>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Nationality:</label>
+        <p>{{ player.country.c_name }}</p>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Position:</label>
+        <p>{{ player.position }}</p>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Age:</label>
+        <p>{{ player.age }}</p>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Team:</label>
+        <p>{{ player.team.t_name }}</p>
+    </div>
+    <h3>Player Stats</h3>
+    <div class="mb-3">
+        <label class="form-label">Goals:</label>
+        <p>{{ player.stats.goals }}</p>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Appearances:</label>
+        <p>{{ player.stats.appearances }}</p>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Assists:</label>
+        <p>{{ player.stats.assists }}</p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2>Edit League</h2>
+    <form action="/update_league/{{ league.league_name }}" method="post">
+        <div class="mb-3">
+            <label for="league_name" class="form-label">League Name:</label>
+            <input type="text" class="form-control" id="league_name" name="league_name" value="{{ league.league_name }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="country_name" class="form-label">Country:</label>
+            <input type="text" class="form-control" id="country_name" name="country_name" value="{{ league.country_name }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="founded" class="form-label">Founded:</label>
+            <input type="date" class="form-control" id="founded" name="founded" value="{{ league.founded }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="total_teams" class="form-label">Total Teams:</label>
+            <input type="number" class="form-control" id="total_teams" name="total_teams" value="{{ league.total_teams }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="total_games" class="form-label">Total Games:</label>
+            <input type="number" class="form-control" id="total_games" name="total_games" value="{{ league.total_games }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update League</button>
+        <form action="/delete_league/{{ league.league_name }}" method="post" class="d-inline">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
+        </form>
+    </form>
+    
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>League Details</h2>
+    <div class="mb-3">
+        <h4>League Name: {{ league.league_name }}</h4>
+    </div>
+    <div class="mb-3">
+        <h4>Country: {{ league.country_name }}</h4>
+    </div>
+    <div class="mb-3">
+        <h4>Founded: {{ league.founded }}</h4>
+    </div>
+    <div class="mb-3">
+        <h4>Total Teams: {{ league.total_teams }}</h4>
+    </div>
+    <div class="mb-3">
+        <h4>Total Games: {{ league.total_games }}</h4>
+    </div>
+    <a href="/leagues/edit/{{ league.league_name }}" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+    <form action="/delete_league/{{ league.league_name }}" method="post" class="d-inline">
+        <input type="hidden" name="_method" value="DELETE">
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
+    </form>
+</div>
+{% endblock %}

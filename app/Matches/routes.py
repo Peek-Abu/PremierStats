@@ -6,15 +6,25 @@ app = Blueprint('matches', __name__)
 def show_matches():
     try:
         all_matches = match_dao.getAllMatches()
-        return render_template('matches.html', matches=all_matches)
+        return render_template('Matches/matches.html', matches=all_matches)
     except Exception as e:
         return str(e)
     
 @app.route('/matches/<int:match_id>')
 def match_details(match_id):
     try:
+        print(match_id)
         match = match_dao.getMatch(match_id)
-        return render_template('Managers/manager_details.html', match=match)
+        print(match)
+        return render_template('Matches/match_details.html', match=match)
+    except Exception as e:
+        return str(e)
+
+@app.route('/matches/edit/<int:match_id>')
+def match_edit(match_id):
+    try:
+        match = match_dao.getMatch(match_id)
+        return render_template('Matches/match_edit.html', match=match)
     except Exception as e:
         return str(e)
 
