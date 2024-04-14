@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Team Details</h2>
+    <div class="mb-3">
+        <h4>Team Name: {{ team.t_name }}</h4>
+    </div>
+    <div class="mb-3">
+        <h4>Manager: {{ team.manager.name }}</h4>
+    </div>
+    <div class="mb-3">
+        <h4>Nationality: {{ team.nationality }}</h4>
+    </div>
+    <div class="mb-3">
+        <h4>Founded: {{ team.founded }}</h4>
+    </div>
+    <div class="mb-3">
+        <h4>Total Titles: {{ team.total_titles }}</h4>
+    </div>
+    <div class="mb-3">
+        <h4>Historical Performance: {{ team.historical_performance }}</h4>
+    </div>
+    <div class="mb-3">
+        <h4>Home Stadium: {{ team.stadium.name }}</h4>
+    </div>
+    <div class="mb-3">
+        <h4>League: {{ team.league_name }}</h4>
+    </div>
+    <a href="/teams/edit/{{ team.t_name }}" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+    <form action="/delete_team/{{ team.t_name }}" method="post" class="d-inline">
+        <input type="hidden" name="_method" value="DELETE">
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
+    </form>
+</div>
+{% endblock %}

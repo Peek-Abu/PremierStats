@@ -6,7 +6,7 @@ app = Blueprint('players', __name__)
 def show_players():
     try:
         all_players = player_dao.getAllPlayers()
-        return render_template('players.html', players=all_players)
+        return render_template('Players/players.html', players=all_players)
     except Exception as e:
         return str(e)
     
@@ -14,7 +14,15 @@ def show_players():
 def player_details(player_id):
     try:
         player = player_dao.getPlayer(player_id)
-        return render_template('Managers/manager_details.html', player=player)
+        return render_template('Players/player_details.html', player=player)
+    except Exception as e:
+        return str(e)
+
+@app.route('/players/edit/<int:player_id>')
+def player_edit(player_id):
+    try:
+        player = player_dao.getPlayer(player_id)
+        return render_template('Players/player_edit.html', player=player)
     except Exception as e:
         return str(e)
 

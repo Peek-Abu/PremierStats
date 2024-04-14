@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Team Details</h2>
+    <form class="d-inline" action="{{ url_for('teams.update_team', t_name=team.t_name) }}" method="post">
+        <div class="mb-3">
+            <label for="t_name" class="form-label">Team Name:</label>
+            <input type="text" class="form-control" id="t_name" name="t_name" value="{{ team.t_name }}" readonly> <!-- Keep team name non-editable -->
+        </div>
+        <div class="mb-3">
+            <label for="manager_id" class="form-label">Manager ID:</label>
+            <input type="number" class="form-control" id="manager_id" name="manager_id" value="{{ team.manager_id }}">
+        </div>
+        <div class="mb-3">
+            <label for="nationality" class="form-label">Nationality:</label>
+            <input type="text" class="form-control" id="nationality" name="nationality" value="{{ team.nationality }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="founded" class="form-label">Founded:</label>
+            <input type="date" class="form-control" id="founded" name="founded" value="{{ team.founded }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="total_titles" class="form-label">Total Titles:</label>
+            <input type="number" class="form-control" id="total_titles" name="total_titles" value="{{ team.total_titles }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="historical_performance" class="form-label">Historical Performance:</label>
+            <input type="number" class="form-control" id="historical_performance" name="historical_performance" value="{{ team.historical_performance }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="home_stadium" class="form-label">Home Stadium:</label>
+            <input type="number" class="form-control" id="home_stadium" name="home_stadium" value="{{ team.home_stadium }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="league_name" class="form-label">League:</label>
+            <input type="text" class="form-control" id="league_name" name="league_name" value="{{ team.league_name }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Team</button>
+    </form>
+    <form class="d-inline" action="{{ url_for('teams.delete_team', t_name=team.t_name) }}" method="post">
+        <input type="hidden" name="_method" value="DELETE">
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
+    </form>
+</div>
+{% endblock %}

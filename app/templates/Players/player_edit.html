@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Player Details</h2>
+    <form class="d-inline" action="{{ url_for('players.update_player', player_id=player.player_id) }}" method="post">
+        <div class="mb-3">
+            <label for="player_id" class="form-label">Player ID:</label>
+            <input type="number" class="form-control" id="player_id" name="player_id" value="{{ player.player_id }}" readonly>
+        </div>
+        <div class="mb-3">
+            <label for="p_name" class="form-label">Name:</label>
+            <input type="text" class="form-control" id="p_name" name="p_name" value="{{ player.p_name }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="team_name" class="form-label">Team Name:</label>
+            <input type="text" class="form-control" id="team_name" name="team_name" value="{{ player.team_name }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="position" class="form-label">Position:</label>
+            <input type="text" class="form-control" id="position" name="position" value="{{ player.position }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="nationality" class="form-label">Nationality:</label>
+            <input type="text" class="form-control" id="nationality" name="nationality" value="{{ player.nationality }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="age" class="form-label">Age:</label>
+            <input type="number" class="form-control" id="age" name="age" value="{{ player.age }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Player</button>
+    </form>
+    <form class="d-inline" action="{{ url_for('players.delete_player', player_id=player.player_id) }}" method="post">
+        <input type="hidden" name="_method" value="DELETE">
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
+    </form>
+</div>
+{% endblock %}

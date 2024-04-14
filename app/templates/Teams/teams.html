@@ -1,29 +1,88 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>Teams</h2>
-<table>
-    <thead>
-        <tr>
-            <th>Team Name</th>
-            <th>Manager</th>
-            <th>Nationality</th>
-            <th>Founded</th>
-            <th>Total Titles</th>
-            <th>Historical Performance</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for team in teams %}
-        <tr>
-            <td>{{ team.t_name }}</td>
-            <td>{{ team.manager.name }}</td> <!-- Assuming you join/load the manager -->
-            <td>{{ team.nationality }}</td>
-            <td>{{ team.founded }}</td>
-            <td>{{ team.total_titles }}</td>
-            <td>{{ team.historical_performance }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="container">
+    <h2>Teams</h2>
+    <table class="table show-all">
+        <thead>
+            <tr>
+                <th>Team Name</th>
+                <th>Manager</th>
+                <th>Nationality</th>
+                <th>Founded</th>
+                <th>Total Titles</th>
+                <th>Historical Performance</th>
+                <th>Home Stadium</th>
+                <th>League</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for team in teams %}
+            <tr>
+               
+                <td>{{ team.t_name }}</td>
+                <td><a href="/managers/{{team.manager.manager_id}}">{{ team.manager.name }}</a></td>
+                <td><a href="/countries/{{ team.nationality }}">{{ team.nationality }}</a></td>
+                <td>{{ team.founded }}</td>
+                <td>{{ team.total_titles }}</td>
+                <td>{{ team.historical_performance }}</td>
+                <td><a href="/stadiums/{{ team.stadium.stadium_id }}">{{ team.stadium.name }}</a></td>
+                <td><a href="/leagues/{{ team.league_name }}">{{ team.league_name }}</a></td>
+                <td>
+                    <a href="/teams/edit/{{ team.t_name }}" class="btn btn-warning"><i class="fa fa-pencil d-inline"></i></a>
+                    <form action="/delete_team/{{ team.t_name }}" method="post" class="d-inline">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+     <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addManagerForm" aria-expanded="false" aria-controls="addManagerForm">
+        Add Team
+    </button>
+
+     <div class="collapse" id="addManagerForm">
+        <div class="card card-body">
+            <form action="/add_team" method="post">
+                <div class="mb-3">
+                    <label for="t_name" class="form-label">Team Name:</label>
+                    <input type="text" class="form-control" id="t_name" name="t_name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="manager_id" class="form-label">Manager ID:</label>
+                    <input type="number" class="form-control" id="manager_id" name="manager_id" required>
+                </div>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Nationality:</label>
+                    <input type="text" class="form-control" id="nationality" name="nationality" required>
+                </div>
+                <div class="mb-3">
+                    <label for="founded" class="form-label">Founded:</label>
+                    <input type="date" class="form-control" id="founded" name="founded" required>
+                </div>
+                <div class="mb-3">
+                    <label for="total_titles" class="form-label">Total Titles:</label>
+                    <input type="number" class="form-control" id="total_titles" name="total_titles" required>
+                </div>
+                <div class="mb-3">
+                    <label for="historical_performance" class="form-label">Historical Performance:</label>
+                    <input type="number" class="form-control" id="historical_performance" name="historical_performance" required>
+                </div>
+                <div class="mb-3">
+                    <label for="home_stadium" class="form-label">Home Stadium:</label>
+                    <input type="text" class="form-control" id="home_stadium" name="home_stadium" required>
+                </div>
+                <div class="mb-3">
+                    <label for="league_name" class="form-label">League Name:</label>
+                    <input type="text" class="form-control" id="league_name" name="league_name" required>
+                </div>
+                <button type="submit" class="btn btn-success">Add Team</button>
+            </form>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

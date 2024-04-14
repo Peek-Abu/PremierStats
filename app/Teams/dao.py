@@ -1,5 +1,5 @@
 from flask import request
-
+from datetime import datetime
 from app.database import db
 from app.models import Team
 
@@ -32,10 +32,9 @@ def getTeam(team_name):
 
 def updateTeam(team_name):
     team = getTeam(team_name)
-    team.t_name = request.form['t_name']
     team.manager_id = request.form['manager_id']
     team.nationality = request.form['nationality']
-    team.founded = request.form['founded']
+    team.founded = datetime.strptime(request.form['founded'], '%Y-%m-%d')
     team.total_titles = request.form['total_titles']
     team.historical_performance = request.form['historical_performance']
     team.home_stadium = request.form['home_stadium']

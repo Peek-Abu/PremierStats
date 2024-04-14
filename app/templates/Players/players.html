@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Players</h2>
+    <table class="table show-all">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Team</th>
+                <th>Position</th>
+                <th>Nationality</th>
+                <th>Age</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player in players %}
+            <tr>
+                <td>{{ player.p_name }}</td>
+                <td><a href="/teams/{{player.team_name}}">{{ player.team_name }}</a></td>
+                <td>{{ player.position }}</td>
+                <td><a href="/countries/{{player.nationality}}">{{ player.nationality }}</a></td>
+                <td>{{ player.age }}</td>
+                <td>
+                    <a href="/players/edit/{{ player.player_id }}" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+                    <form action="/delete_player/{{ player.player_id }}" method="post" class="d-inline">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addPlayerForm" aria-expanded="false" aria-controls="addPlayerForm">
+        Add Player
+    </button>
+
+    <div class="collapse" id="addPlayerForm">
+        <div class="card card-body">
+            <form action="/add_player" method="post">
+                <div class="mb-3">
+                    <label for="p_name" class="form-label">Name:</label>
+                    <input type="text" class="form-control" id="p_name" name="p_name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="team_name" class="form-label">Team Name:</label>
+                    <input type="text" class="form-control" id="team_name" name="team_name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="position" class="form-label">Position:</label>
+                    <input type="text" class="form-control" id="position" name="position" required>
+                </div>
+                <div class="mb-3">
+                    <label for="nationality" class="form-label">Nationality:</label>
+                    <input type="text" class="form-control" id="nationality" name="nationality" required>
+                </div>
+                <div class="mb-3">
+                    <label for="age" class="form-label">Age:</label>
+                    <input type="number" class="form-control" id="age" name="age" required>
+                </div>
+                <button type="submit" class="btn btn-success">Add Player</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

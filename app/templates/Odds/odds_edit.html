@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Odds Details</h2>
+    <form class="d-inline" action="{{ url_for('odds.update_odds', odds_id=odds.odds_id) }}" method="post">
+        <div class="mb-3">
+            <label for="odds_id" class="form-label">Odds ID:</label>
+            <input type="number" class="form-control" id="odds_id" name="odds_id" value="{{ odds.odds_id }}" readonly>
+        </div>
+        <div class="mb-3">
+            <label for="under_odds" class="form-label">Under Odds:</label>
+            <input type="number" class="form-control" id="under_odds" name="under_odds" value="{{ odds.under_odds }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="over_odds" class="form-label">Over Odds:</label>
+            <input type="number" class="form-control" id="over_odds" name="over_odds" value="{{ odds.over_odds }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Odds</button>
+    </form>
+    <form class="d-inline" action="{{ url_for('odds.delete_odds', odds_id=odds.odds_id) }}" method="post">
+        <input type="hidden" name="_method" value="DELETE">
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
+    </form>
+</div>
+{% endblock %}

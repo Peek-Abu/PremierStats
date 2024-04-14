@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Event Details</h2>
+    <form class="d-inline" action="{{ url_for('events.update_event', event_id=event.event_id) }}" method="post">
+        <div class="mb-3">
+            <label for="match_id" class="form-label">Match ID:</label>
+            <input type="number" class="form-control" id="match_id" name="match_id" value="{{ event.match_id }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="player_involved" class="form-label">Player Involved:</label>
+            <input type="number" class="form-control" id="player_involved" name="player_involved" value="{{ event.player_involved }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">Description:</label>
+            <input type="text" class="form-control" id="description" name="description" value="{{ event.description }}">
+        </div>
+        <div class="mb-3">
+            <label for="event_type" class="form-label">Event Type:</label>
+            <select class="form-control" id="event_type" name="event_type" required>
+                <option value="Goals" {% if event.event_type == 'Goals' %} selected {% endif %}>Goals</option>
+                <option value="Cards" {% if event.event_type == 'Cards' %} selected {% endif %}>Cards</option>
+                <option value="Substitutions" {% if event.event_type == 'Substitutions' %} selected {% endif %}>Substitutions</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="minute" class="form-label">Minute:</label>
+            <input type="number" class="form-control" id="minute" name="minute" value="{{ event.minute }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Event</button>
+    </form>
+    <form class="d-inline" action="{{ url_for('events.delete_event', event_id=event.event_id) }}" method="post">
+        <input type="hidden" name="_method" value="DELETE">
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Manager Details</h2>
+    <form class="d-inline" action="{{ url_for('managers.update_manager', manager_id=manager.manager_id) }}" method="post">
+        <div class="mb-3">
+            <label for="manager_id" class="form-label">Manager ID:</label>
+            <input type="text" class="form-control" id="manager_id" name="manager_id" value="{{ manager.manager_id }}" readonly> <!-- Keep team name non-editable -->
+        </div>
+        <div class="mb-3">
+            <label for="name" class="form-label">Name:</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ manager.name }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="age" class="form-label">Age:</label>
+            <input type="number" class="form-control" id="age" name="age" value="{{ manager.age }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="years_managing" class="form-label">Years Managing:</label>
+            <input type="number" class="form-control" id="years_managing" name="years_managing" value="{{ manager.years_managing }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="titles_managed" class="form-label">Titles Managed:</label>
+            <input type="number" class="form-control" id="titles_managed" name="titles_managed" value="{{ manager.titles_managed }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Manager</button>
+    </form>
+    <form action="/delete_manager/{{ manager.manager_id }}" method="post" class="d-inline">
+        <input type="hidden" name="_method" value="DELETE">
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
+    </form>
+</div>
+{% endblock %}

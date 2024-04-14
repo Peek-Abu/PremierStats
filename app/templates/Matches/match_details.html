@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Match Details</h2>
+    <div class="mb-3">
+        <label class="form-label">Match ID:</label>
+        <p>{{ match.match_id }}</p>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Referee:</label>
+        <p>{{ match.referee.ref_name }}</p>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Game Date:</label>
+        <p>{{ match.game_date }}</p>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Venue:</label>
+        <p>{{ match.stadium.stadium_name }}</p>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Home Team:</label>
+        <p>{{ match.home_team.t_name }}</p>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Away Team:</label>
+        <p>{{ match.away_team.t_name }}</p>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Scoreline:</label>
+        <p>{{ match.scoreline }}</p>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Attendance:</label>
+        <p>{{ match.attendance }}</p>
+    </div>
+    <h3>Odds</h3>
+    <div class="mb-3">
+        <label class="form-label">Under Odds:</label>
+        <p>{{ match.odds.under_odds }}</p>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Over Odds:</label>
+        <p>{{ match.odds.over_odds }}</p>
+    </div>
+    <a href="/matches/edit/{{ match.match_id }}" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+    <form action="/delete_match/{{ match.match_id }}" method="post" class="d-inline">
+        <input type="hidden" name="_method" value="DELETE">
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
+    </form>
+</div>
+{% endblock %}

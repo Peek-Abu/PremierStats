@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Assist Details</h2>
+    <form class="d-inline" action="{{ url_for('assists.update_assist', assist_id=assist.assist_id) }}" method="post">
+        <div class="mb-3">
+            <label for="assist_id" class="form-label">Assist ID:</label>
+            <input type="number" class="form-control" id="assist_id" name="assist_id" value="{{ assist.assist_id }}" readonly>
+        </div>
+        <div class="mb-3">
+            <label for="assisting_player" class="form-label">Assisting Player ID:</label>
+            <input type="number" class="form-control" id="assisting_player" name="assisting_player" value="{{ assist.assisting_player }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="goal" class="form-label">Goal Event ID:</label>
+            <input type="number" class="form-control" id="goal" name="goal" value="{{ assist.goal }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Assist</button>
+    </form>
+    <form class="d-inline" action="{{ url_for('assists.delete_assist', assist_id=assist.assist_id) }}" method="post">
+        <input type="hidden" name="_method" value="DELETE">
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
+    </form>
+</div>
+{% endblock %}
