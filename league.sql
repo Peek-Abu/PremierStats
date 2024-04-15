@@ -35,8 +35,9 @@ CREATE TABLE League (
     founded DATE,
     total_teams INT,
     total_games INT,
-    FOREIGN KEY (country) REFERENCES Country(c_name) ON DELETE CASCADE ON UPDATE CASCADE
+    FOREIGN KEY (country_name) REFERENCES Country(c_name) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
 
 CREATE TABLE Team (
     t_name VARCHAR(64) PRIMARY KEY,
@@ -69,12 +70,15 @@ CREATE TABLE Game_Match (
     scoreline VARCHAR(64) not null,
     attendance INT,
     odds INT,
+    league varchar(64) not null,
     FOREIGN KEY (home) REFERENCES Team(t_name) ON DELETE RESTRICT ON UPDATE CASCADE,
     FOREIGN KEY (away) REFERENCES Team(t_name) ON DELETE RESTRICT ON UPDATE CASCADE,
     FOREIGN KEY (venue) REFERENCES Stadium(stadium_id) ON DELETE RESTRICT ON UPDATE CASCADE,
     FOREIGN KEY (odds) REFERENCES Odds(odds_id) ON DELETE RESTRICT ON UPDATE CASCADE,
+    FOREIGN KEY (league) REFERENCES League(league_name) ON DELETE RESTRICT ON UPDATE CASCADE,
     FOREIGN KEY (ref) REFERENCES Referee(ref_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
 
 CREATE TABLE Stats (
 	stats_id int primary key,
@@ -101,9 +105,8 @@ CREATE TABLE Event (
     match_id INT not null,
     player_involved INT not null,
     description VARCHAR(64),
-    event_type ENUM ("Goals", "Cards", "Substitutions"),
-    minute INT,
     event_type ENUM ("Goals", "Cards", "Substitutions") not null,
+    minute INT,
     FOREIGN KEY (match_id) REFERENCES Game_Match(match_id) ON DELETE RESTRICT ON UPDATE CASCADE,
 	  FOREIGN KEY (player_involved) REFERENCES Player(player_id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
@@ -115,3 +118,76 @@ CREATE TABLE Assist (
     FOREIGN KEY (assisting_player) REFERENCES Player(player_id) ON DELETE RESTRICT ON UPDATE CASCADE,
     FOREIGN KEY (goal) REFERENCES Event(event_id) ON DELETE RESTRICT ON UPDATE CASCADE
 );
+
+
+-- This is when a player gets deleted delete a player's stats
+DELIMITER //
+CREATE TRIGGER delete_player_stats
+AFTER DELETE ON Player
+FOR EACH ROW
+BEGIN
+    DELETE FROM stats WHERE stats_id = OLD.player_stats;
+END;
+//
+DELIMITER ;
+DELIMITER //
+-- This is when a match gets deleted delete it's odds.
+CREATE TRIGGER delete_match_odds
+AFTER DELETE ON Game_Match
+FOR EACH ROW
+BEGIN
+    DELETE FROM odds WHERE odds_id = OLD.odds;
+END;
+//
+DELIMITER ;
+-- This is when a new league gets made update the country's new league hosted.
+DELIMITER //
+CREATE TRIGGER update_leagues_hosted
+AFTER INSERT ON League
+FOR EACH ROW
+BEGIN
+    UPDATE Country
+    SET leagues_hosted = leagues_hosted + 1;
+END;
+//
+DELIMITER ;
+-- This is when a new game_match gets added update the league's game counts.
+DELIMITER //
+CREATE TRIGGER update_leagues_games
+AFTER INSERT ON Game_Match
+FOR EACH ROW
+BEGIN
+    UPDATE League
+    SET total_games = total_games + 1
+    where league_name = NEW.league;
+END;
+
+//
+DELIMITER ;
+-- This is when a new teams gets added update the league's team count.
+DELIMITER //
+CREATE TRIGGER update_leagues_teams
+AFTER INSERT ON Team
+FOR EACH ROW
+BEGIN
+    UPDATE League
+    SET total_teams = total_teams + 1
+    where league_name = NEW.league_name;
+END;
+//
+DELIMITER ;
+-- When a team wins a title add it to the manager's titles managed count.
+DELIMITER //
+CREATE TRIGGER update_manager_total_titles
+AFTER UPDATE ON Team
+FOR EACH ROW
+BEGIN
+    UPDATE Manager
+    SET titles_managed = titles_managed + (NEW.total_titles - OLD.total_titles)
+    WHERE manager_id = NEW.manager;
+END;
+//
+DELIMITER ;
+
+
+
