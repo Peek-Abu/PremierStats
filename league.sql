@@ -1,5 +1,4 @@
- 
-DROP DATABASE IF EXISTS `league`;
+ DROP DATABASE IF EXISTS `league`;
 CREATE DATABASE `league`;
 USE `league`;
 
@@ -478,6 +477,7 @@ INSERT INTO Assist (assisting_player, goal) VALUES
 (5, 68), -- Richarlison's goal, Dominic Calvert-Lewin as assister
 (5, 68), -- Richarlison's goal, Dominic Calvert-Lewin as assister
 (1, 70), -- Timo Werner's goal, Mason Mount as assister
-(2, 70) -- Mason Mount's goal, Timo Werner as assister
+(2, 70); -- Mason Mount's goal, Timo Werner as assister
 
-
+INSERT INTO League (league_name, country_name, founded, total_teams, total_games) VALUES
+('German League', 'German', '1992-01-01', 0, 0)
