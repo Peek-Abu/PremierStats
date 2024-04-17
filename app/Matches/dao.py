@@ -12,7 +12,7 @@ def createMatch():
     away = request.form['away']
     scoreline = request.form['scoreline']
     attendance = request.form['attendance']
-    odds_id = request.form['odds_id']
+    odds_id = request.form['odds_id'] #remove this line and create a new odds object with under and over odds
 
     new_match = Match(ref=ref, game_date=game_date, venue=venue, home=home, away=away, scoreline=scoreline,
                       attendance=attendance, odds_id=odds_id)
@@ -38,7 +38,7 @@ def updateMatch(match_id):
     match.away = request.form['away']
     match.scoreline = request.form['scoreline']
     match.attendance = request.form['attendance']
-    match.odds_id = request.form['odds_id']
+    # match.odds_id = request.form['odds_id']
     db.session.commit()
     return match
 

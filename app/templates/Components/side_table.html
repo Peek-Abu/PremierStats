@@ -1,0 +1,12 @@
+{% for action, url in actions.items() %}
+    {% if action == 'edit' %}
+        <a href="{{ url }}" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+    {% elif action == 'delete' %}
+        <form action="{{url}}" method="post" class="d-inline">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
+        </form>
+    {% elif action == 'view' %}
+        <a href="{{ url }}" class="btn btn-info"><i class="fa fa-eye"></i></a>
+    {% endif %}
+{% endfor %}

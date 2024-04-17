@@ -8,7 +8,7 @@ def show_matches():
         all_matches = match_dao.getAllMatches()
         return render_template('Matches/matches.html', matches=all_matches)
     except Exception as e:
-        return str(e)
+        return render_template('Components/errors.html', error_message=str(e))
     
 @app.route('/matches/<int:match_id>')
 def match_details(match_id):
@@ -18,7 +18,7 @@ def match_details(match_id):
         print(match)
         return render_template('Matches/match_details.html', match=match)
     except Exception as e:
-        return str(e)
+        return render_template('Components/errors.html', error_message=str(e))
 
 @app.route('/matches/edit/<int:match_id>')
 def match_edit(match_id):
@@ -26,7 +26,7 @@ def match_edit(match_id):
         match = match_dao.getMatch(match_id)
         return render_template('Matches/match_edit.html', match=match)
     except Exception as e:
-        return str(e)
+        return render_template('Components/errors.html', error_message=str(e))
 
 @app.route('/update_match/<int:match_id>', methods=['POST'])
 def update_match(match_id):
@@ -34,7 +34,7 @@ def update_match(match_id):
         match_dao.updateMatch(match_id)
         return redirect(url_for('matches.show_matches'))
     except Exception as e:
-        return str(e)
+        return render_template('Components/errors.html', error_message=str(e))
 
 @app.route('/add_match', methods=['POST'])
 def add_match():
@@ -42,7 +42,7 @@ def add_match():
         match_dao.createMatch()
         return redirect(url_for('matches.show_matches'))
     except Exception as e:
-        return str(e)
+        return render_template('Components/errors.html', error_message=str(e))
     
 @app.route('/delete_match/<int:match_id>', methods=['POST'])
 def delete_match(match_id):
@@ -50,4 +50,4 @@ def delete_match(match_id):
         match_dao.deleteMatch(match_id)
         return redirect(url_for('matches.show_matches'))
     except Exception as e:
-        return str(e)
+        return render_template('Components/errors.html', error_message=str(e))

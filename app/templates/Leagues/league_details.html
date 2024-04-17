@@ -18,10 +18,11 @@
     <div class="mb-3">
         <h4>Total Games: {{ league.total_games }}</h4>
     </div>
-    <a href="/leagues/edit/{{ league.league_name }}" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-    <form action="/delete_league/{{ league.league_name }}" method="post" class="d-inline">
-        <input type="hidden" name="_method" value="DELETE">
-        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
-    </form>
+    {% set item = league %}
+    {% set actions = {
+        'edit': url_for('leagues.league_edit', league_name=league.league_name),
+        'delete': url_for('leagues.delete_league', league_name=league.league_name)
+    } %}
+    {% include 'Components/side_table.html' %}
 </div>
 {% endblock %}

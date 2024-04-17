@@ -8,7 +8,7 @@ def show_countries():
         all_countries = country_dao.getAllCountries()
         return render_template('Countries/countries.html', countries=all_countries)
     except Exception as e:
-        return str(e)
+        return render_template('Components/errors.html', error_message=str(e))
     
 @app.route('/countries/<string:c_name>')
 def country_details(c_name):
@@ -16,7 +16,7 @@ def country_details(c_name):
         country = country_dao.getCountry(c_name)
         return render_template('Countries/country_details.html', country=country)
     except Exception as e:
-        return str(e)
+        return render_template('Components/errors.html', error_message=str(e))
 
 @app.route('/countries/edit/<string:c_name>')
 def country_edit(c_name):
@@ -24,7 +24,7 @@ def country_edit(c_name):
         country = country_dao.getCountry(c_name)
         return render_template('Countries/country_edit.html', country=country)
     except Exception as e:
-        return str(e)
+        return render_template('Components/errors.html', error_message=str(e))
 
 @app.route('/update_country/<string:c_name>', methods=['POST'])
 def update_country(c_name):
@@ -32,7 +32,7 @@ def update_country(c_name):
         country_dao.updateCountry(c_name)
         return redirect(url_for('countries.show_countries'))
     except Exception as e:
-        return str(e)
+        return render_template('Components/errors.html', error_message=str(e))
 
 @app.route('/add_country', methods=['POST'])
 def add_country():
@@ -40,7 +40,7 @@ def add_country():
         country_dao.createCountry()
         return redirect(url_for('countries.show_countries'))
     except Exception as e:
-        return str(e)
+        return render_template('Components/errors.html', error_message=str(e))
     
 @app.route('/delete_country/<string:c_name>', methods=['POST'])
 def delete_country(c_name):
@@ -48,4 +48,4 @@ def delete_country(c_name):
         country_dao.deleteCountry(c_name)
         return redirect(url_for('countries.show_countries'))
     except Exception as e:
-        return str(e)
+        return render_template('Components/errors.html', error_message=str(e))

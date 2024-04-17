@@ -8,7 +8,7 @@ def show_assists():
         all_assists = assist_dao.getAllAssists()
         return render_template('Assists/assists.html', assists=all_assists)
     except Exception as e:
-        return str(e)
+        return render_template('Components/errors.html', error_message=str(e))
 
 @app.route('/assists/<int:assist_id>')
 def assist_details(assist_id):
@@ -16,7 +16,7 @@ def assist_details(assist_id):
         assist = assist_dao.getAssist(assist_id)
         return render_template('Assists/assist_details.html', assist=assist)
     except Exception as e:
-        return str(e)
+        return render_template('Components/errors.html', error_message=str(e))
 
 @app.route('/assists/edit/<int:assist_id>')
 def assist_edit(assist_id):
@@ -24,7 +24,7 @@ def assist_edit(assist_id):
         assist = assist_dao.getAssist(assist_id)
         return render_template('Assists/assist_edit.html', assist=assist)
     except Exception as e:
-        return str(e)
+        return render_template('Components/errors.html', error_message=str(e))
 
 @app.route('/update_assist/<int:assist_id>', methods=['POST'])
 def update_assist(assist_id):
@@ -32,7 +32,7 @@ def update_assist(assist_id):
         assist_dao.updateAssist(assist_id)
         return redirect(url_for('assists.show_assists'))
     except Exception as e:
-        return str(e)
+        return render_template('Components/errors.html', error_message=str(e))
 
 @app.route('/add_assist', methods=['POST'])
 def add_assist():
@@ -40,7 +40,7 @@ def add_assist():
         assist_dao.createAssist()
         return redirect(url_for('assists.show_assists'))
     except Exception as e:
-        return str(e)
+        return render_template('Components/errors.html', error_message=str(e))
     
 @app.route('/delete_assist/<int:assist_id>', methods=['POST'])
 def delete_assist(assist_id):
@@ -48,4 +48,4 @@ def delete_assist(assist_id):
         assist_dao.deleteAssist(assist_id)
         return redirect(url_for('assists.show_assists'))
     except Exception as e:
-        return str(e)
+        return render_template('Components/errors.html', error_message=str(e))

@@ -1,48 +1,64 @@
-    <div class="container m-0 ">
+    <div class="container m-0 p-0 ">
         <div class="row ">
+            {% set active_page = request.path %}
+
             <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">
+                <li class="nav-item{{ ' active' if active_page == '/' else '' }}">
+                    <a class="nav-link" aria-current="page" href="/">
                         Home
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/managers">
+                    <a class="nav-link{{ ' active' if active_page.startswith('/countries') else '' }}" href="/countries">
+                        Countries
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link{{ ' active' if active_page.startswith('/managers') else '' }}" href="/managers">
                         Managers
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/teams">
+                    <a class="nav-link{{ ' active' if active_page.startswith('/referees') else '' }}" href="/referees">
+                        Referees
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link{{ ' active' if active_page.startswith('/stadiums') else '' }}" href="/stadiums">
+                        Stadiums
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link{{ ' active' if active_page.startswith('/teams') else '' }}" href="/teams">
                         Teams
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/matches">
+                    <a class="nav-link{{ ' active' if active_page.startswith('/matches') else '' }}" href="/matches">
                         Matches
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/players">
+                    <a class="nav-link{{ ' active' if active_page.startswith('/players') else '' }}" href="/players">
                         Players
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/events">
+                    <a class="nav-link{{ ' active' if active_page.startswith('/events') else '' }}" href="/events">
                         Events
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/assists">
+                    <a class="nav-link{{ ' active' if active_page.startswith('/assists') else '' }}" href="/assists">
                         Assists
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/leagues">
+                    <a class="nav-link{{ ' active' if active_page.startswith('/leagues') else '' }}" href="/leagues">
                         Leagues
                     </a>
                 </li>
             </ul>
-            <!-- Main content -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 {% block content %}{% endblock %}
             </main>

@@ -6,3 +6,7 @@ a {
 .show-all td:last-child {
   border-bottom: none;
 }
+
+.active {
+  background-color: #f5f5f5;
+}

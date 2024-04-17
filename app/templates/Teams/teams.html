@@ -29,11 +29,12 @@
                 <td><a href="/stadiums/{{ team.stadium.stadium_id }}">{{ team.stadium.name }}</a></td>
                 <td><a href="/leagues/{{ team.league_name }}">{{ team.league_name }}</a></td>
                 <td>
-                    <a href="/teams/edit/{{ team.t_name }}" class="btn btn-warning"><i class="fa fa-pencil d-inline"></i></a>
-                    <form action="/delete_team/{{ team.t_name }}" method="post" class="d-inline">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
-                    </form>
+                    {% set actions = {
+                        'view': url_for('teams.team_details', team_name=team.t_name),
+                        'edit': url_for('teams.team_edit', team_name=team.t_name),
+                        'delete': url_for('teams.delete_team', t_name=team.t_name)
+                    } %}
+                    {% include 'Components/side_table.html' %}
                 </td>
             </tr>
             {% endfor %}

@@ -44,10 +44,11 @@
         <label class="form-label">Over Odds:</label>
         <p>{{ match.odds.over_odds }}</p>
     </div>
-    <a href="/matches/edit/{{ match.match_id }}" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-    <form action="/delete_match/{{ match.match_id }}" method="post" class="d-inline">
-        <input type="hidden" name="_method" value="DELETE">
-        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
-    </form>
+    {% set item = match %}
+    {% set actions = {
+        'edit': url_for('matches.match_edit', match_id=match.match_id),
+        'delete': url_for('matches.delete_match', match_id=match.match_id)
+    } %}
+    {% include 'Components/side_table.html' %}
 </div>
 {% endblock %}

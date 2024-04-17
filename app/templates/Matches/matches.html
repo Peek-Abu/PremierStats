@@ -24,11 +24,14 @@
                 <td>{{ match.attendance }}</td>
                 <td><a href="/stadiums/{{ match.stadium.stadium_id }}">{{ match.stadium.name }}</a></td>
                 <td>
-                    <a href="/matches/edit/{{ match.match_id }}" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-                    <form action="/delete_match/{{ match.match_id }}" method="post" class="d-inline">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
-                    </form>
+                    {% set item = match %}
+                    {% set actions = {
+                        'view': url_for('matches.match_details', match_id=match.match_id),
+                        'edit': url_for('matches.match_edit', match_id=match.match_id),
+                        'delete': url_for('matches.delete_match', match_id=match.match_id)
+                    } %}
+                    {% include 'Components/side_table.html' %}
+                    
                 </td>
             </tr>
             {% endfor %}
@@ -69,9 +72,14 @@
                     <label for="attendance" class="form-label">Attendance:</label>
                     <input type="number" class="form-control" id="attendance" name="attendance">
                 </div>
+                <h3>Odds</h3>
                 <div class="mb-3">
-                    <label for="odds_id" class="form-label">Odds ID:</label>
-                    <input type="number" class="form-control" id="odds_id" name="odds_id" required>
+                    <label for="under_odds" class="form-label">Under Odds:</label>
+                    <input type="number" class="form-control" id="under_odds" name="under_odds">
+                </div>
+                <div class="mb-3">
+                    <label for="over_odds" class="form-label">Over Odds:</label>
+                    <input type="number" class="form-control" id="over_odds" name="over_odds">
                 </div>
                 <button type="submit" class="btn btn-success">Add Match</button>
             </form>

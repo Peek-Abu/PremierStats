@@ -21,10 +21,10 @@
             <input type="date" class="form-control" id="founded" name="founded" value="{{ stadium.founded }}" required>
         </div>
         <button type="submit" class="btn btn-primary">Update Stadium</button>
-        <form action="/delete_stadium/{{ stadium.stadium_id }}" method="post" class="d-inline">
-            <input type="hidden" name="_method" value="DELETE">
-            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
-        </form>
+        {% set actions = {
+            'delete': url_for('stadiums.delete_stadium', stadium_id=stadium.stadium_id)
+        } %}
+        {% include 'Components/side_table.html' %}
     </form>
     
 </div>

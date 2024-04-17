@@ -28,11 +28,24 @@
             <label for="age" class="form-label">Age:</label>
             <input type="number" class="form-control" id="age" name="age" value="{{ player.age }}" required>
         </div>
+        <div class="mb-3">
+            <label for="goals">Goals</label>
+            <input type="number" class="form-control" id="goals" name="goals" value="{{ player.stats.goals }}">
+        </div>
+        <div class="mb-3">
+            <label for="appearances">Appearances</label>
+            <input type="number" class="form-control" id="appearances" name="appearances" value="{{ player.stats.appearances }}">
+        </div>
+        <div class="mb-3">
+            <label for="assists">Assists</label>
+            <input type="number" class="form-control" id="assists" name="assists" value="{{ player.stats.assists }}">
+        </div>
         <button type="submit" class="btn btn-primary">Update Player</button>
     </form>
-    <form class="d-inline" action="{{ url_for('players.delete_player', player_id=player.player_id) }}" method="post">
-        <input type="hidden" name="_method" value="DELETE">
-        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
-    </form>
+    
+    {% set actions = {
+        'delete': url_for('players.delete_player', player_id=player.player_id)
+    } %}
+    {% include 'Components/side_table.html' %}
 </div>
 {% endblock %}

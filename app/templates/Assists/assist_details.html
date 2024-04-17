@@ -13,20 +13,21 @@
     </div>
     <div class="mb-3">
         <label class="form-label">Goal Event:</label>
-        <p>{{ assist.event.description }}</p>
+        <p>{{ assist.goal.description }}</p>
     </div>
     <div class="mb-3">
         <label class="form-label">Goal Event Minute:</label>
-        <p>{{ assist.event.minute }}</p>
+        <p>{{ assist.goal.minute }}</p>
     </div>
     <div class="mb-3">
         <label class="form-label">Goal Event Match ID:</label>
-        <p>{{ assist.event.match_id }}</p>
+        <p>{{ assist.goal.match_id }}</p>
     </div>
-    <a href="/assists/edit/{{ assist.assist_id }}" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-    <form action="/delete_assist/{{ assist.assist_id }}" method="post" class="d-inline">
-        <input type="hidden" name="_method" value="DELETE">
-        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
-    </form>
+    {% set item = assist %}
+    {% set actions = {
+        'edit': url_for('assists.assist_edit', assist_id=assist.assist_id),
+        'delete': url_for('assists.delete_assist', assist_id=assist.assist_id)
+    } %}
+    {% include 'Components/side_table.html' %}
 </div>
 {% endblock %}

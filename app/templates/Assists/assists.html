@@ -16,11 +16,13 @@
                 <td><a href="/players/{{ assist.player.player_id }}">{{ assist.player.p_name }}</a></td>
                 <td><a href="/events/{{ assist.goal }}">{{ assist.goal }}</a></td>
                 <td>
-                    <a href="/assists/edit/{{ assist.assist_id }}" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-                    <form action="/delete_assist/{{ assist.assist_id }}" method="post" class="d-inline">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
-                    </form>
+                    {% set item = assist %}
+                    {% set actions = {
+                        'view': url_for('assists.assist_details', assist_id=assist.assist_id),
+                        'edit': url_for('assists.assist_edit', assist_id=assist.assist_id),
+                        'delete': url_for('assists.delete_assist', assist_id=assist.assist_id)
+                    } %}
+                    {% include 'Components/side_table.html' %}
                 </td>
             </tr>
             {% endfor %}
