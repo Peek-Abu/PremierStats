@@ -198,7 +198,7 @@ FOR EACH ROW
 BEGIN
     UPDATE Referee
     SET games_reffed = games_reffed + 1
-    where ref_id = ref;
+    where ref_id = NEW.ref;
 END;
 //
 DELIMITER ;
