@@ -1,13 +1,20 @@
+import getpass
 from flask import Flask, render_template
 from app.database import db
 from app.commands import seed_db, reset_db, seed_csv_data
+
+
+username = input("Enter your MySQL username: ")
+password = getpass.getpass("Enter your MySQL password: ")
 
 app = Flask(__name__)
 config = {
     "address": "localhost",
     "schema": "league",
-    "username": "root",
+    "username": username,
+    "password": password,
 }
+
 uri = "mysql+pymysql://" + \
       config['username'] + ":" + \
       config['password'] + "@" + \

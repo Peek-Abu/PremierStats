@@ -5,19 +5,19 @@ from app.models import Player, Stats
 
 
 def createPlayer():
-]    p_name = request.form['p_name']
+    p_name = request.form['p_name']
     nationality = request.form['nationality']
     position = request.form['position']
     age = request.form['age']
     team_name = request.form['team_name']
+    player_stats = request.form['player_stats']
 
     # Insert into stats
-    goals = request.form['goals']
-    appearances = request.form['appearances']
-    assists = request.form['assists']
+    goals = player_stats['goals']
+    appearances = player_stats['appearances']
+    assists = player_stats['assists']
     stats = Stats(goals=goals, appearances=appearances, assists=assists)
     db.session.add(stats)
-    db.session.commit()
 
     new_player = Player(p_name=p_name, nationality=nationality, position=position, age=age, team_name=team_name,
                         player_stats=stats.stats_id)
@@ -41,12 +41,13 @@ def updatePlayer(player_id):
     player.position = request.form['position']
     player.age = request.form['age']
     player.team_name = request.form['team_name']
+    player.player_stats = request.form['player_stats']
 
     # Update stats if necessary
-    goals = request.form['goals']
-    appearances = request.form['appearances']
-    assists = request.form['assists']
-    stats = Stats.query.get_or_404(player.player_stats)
+    goals = request.form['player_stats']['goals']
+    appearances = request.form['player_stats']['appearances']
+    assists = request.form['player_stats']['assists']
+    stats = Stats.query.get_or_404(player)
     if goals:
         stats.goals = goals
     if appearances:
