@@ -18,8 +18,6 @@ uri = "mysql+pymysql://" + \
 app.config['SQLALCHEMY_DATABASE_URI'] = uri
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = 'FALSE'
 
-
-
 db.init_app(app)
 with app.app_context():
     db.create_all()

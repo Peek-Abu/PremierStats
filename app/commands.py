@@ -143,7 +143,7 @@ def seed_csv_data():
         for index, line in enumerate(file):
             data = line.strip().split(',')
             team = Team(t_name=data[1], 
-                        # manager_id=(index + 1),
+                        manager_id=(index + 1),
                         nationality=data[3],
                         founded=datetime.strptime("1995-10-23", '%Y-%m-%d'),
                         total_titles=2,
@@ -153,25 +153,23 @@ def seed_csv_data():
             teams.append(team)
     currIndex = 1
     for referee, games_reffed in referees.items():
-        referee = Referee(age=random.randint(30, 60), name=referee, games_reffed=games_reffed)
-        refereesTable.append(referee)
+        refereeObject = Referee(age=random.randint(30, 60), name=referee, games_reffed=games_reffed)
+        refereesTable.append(refereeObject)
         for match, matchReferee in matchMap.items():
             if matchReferee == referee:
                 match.ref = currIndex
+                matches.append(match)
         currIndex += 1
         
     currIndex = 1
     for stadiumName, stadiumAttendance in stadiumsSet.items():
         stadium = Stadium(stadium_id=currIndex, stadium_name=stadiumName, seats=stadiumAttendance, founded=datetime.strptime("1995-10-23", '%Y-%m-%d'))
         stadiums.append(stadium)
-        for match, referee in matches:
+        for match in matches:
             if match.venue == stadiumName:
                 match.venue = currIndex
         for team in teams:
-            if team.t_name in stadiumName:
-                team.home_stadium = currIndex
-                break
-            elif team.t_name == "Arsenal" and "Emirates Stadium (London)" == stadiumName:
+            if team.t_name == "Arsenal" and "Emirates Stadium (London)" == stadiumName:
                 team.home_stadium = currIndex
             elif team.t_name == "Manchester City" and "Etihad Stadium (Manchester)" == stadiumName:
                 team.home_stadium = currIndex
@@ -199,23 +197,30 @@ def seed_csv_data():
                 team.home_stadium = currIndex
             elif team.t_name == "Wolverhampton Wanderers" and "Molineux Stadium (Wolverhampton- West Midlands)" == stadiumName:
                 team.home_stadium = currIndex
+            elif team.t_name == "Liverpool" and "Anfield (Liverpool)" == stadiumName:
+                team.home_stadium = currIndex
+            elif team.t_name in stadiumName and team.t_name != "Liverpool":
+                team.home_stadium = currIndex
+                break
         currIndex += 1 
 
     
-    # events = [
-    #     Event(match_id=1, player_involved=1, description='Goal', event_type='Goals', minute=20),
-    #     Event(match_id=1, player_involved=2, description='Yellow card', event_type='Cards', minute=30),
-    #     Event(match_id=14, player_involved=3, description='Substitution', event_type='Substitutions', minute=80),
-    #     Event(match_id=24, player_involved=4, description='Goal', event_type='Goals', minute=90),
-    #     Event(match_id=24, player_involved=5, description='Red card', event_type='Cards', minute=70),
-    #     Event(match_id=24, player_involved=6, description='Substitution', event_type='Substitutions', minute=85),
-    #     Event(match_id=24, player_involved=7, description='Goal', event_type='Goals', minute=60),
-    # ]
+    events = [
+        Event(match_id=6, player_involved=411, description='Goal', event_type='Goals', minute=20),
+        Event(match_id=1, player_involved=2, description='Yellow card', event_type='Cards', minute=30),
+        Event(match_id=14, player_involved=3, description='Substitution', event_type='Substitutions', minute=80),
+        Event(match_id=17, player_involved=200, description='Goal', event_type='Goals', minute=90),
+        Event(match_id=24, player_involved=5, description='Red card', event_type='Cards', minute=70),
+        Event(match_id=24, player_involved=6, description='Substitution', event_type='Substitutions', minute=85),
+        Event(match_id=17, player_involved=200, description='Goal', event_type='Goals', minute=60),
+    ]
 
-    # assists = [
-    #     Assist(assisting_player=2, goal=1),
-    #     Assist(assisting_player=2, goal=7)
-    # ]
+    assists = [
+        Assist(assisting_player=551, goal=1),
+        Assist(assisting_player=84, goal=4),
+        Assist(assisting_player=84, goal=7)
+    ]
 
     db.session.add_all(leagues + countries + refereesTable + managers + stadiums + teams + matches + odds + stats + players + events + assists)
     db.session.commit()
+    print("Database has been seeded with CSV data.")
