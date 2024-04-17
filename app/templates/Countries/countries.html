@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
-
+<!--
+    'delete': url_for('countries.delete_country', c_name=country.c_name)
+-->
 {% block content %}
 <div class="container">
     <h2>Countries</h2>
@@ -41,8 +43,6 @@
                     {% set item = country %}
                     {% set actions = {
                     'view': url_for('countries.country_details', c_name=country.c_name),
-                    'edit': url_for('countries.country_edit', c_name=country.c_name),
-                    'delete': url_for('countries.delete_country', c_name=country.c_name)
                     } %}
                     {% include 'Components/side_table.html' %}
                 </td>

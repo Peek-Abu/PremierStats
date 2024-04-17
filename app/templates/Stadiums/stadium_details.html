@@ -7,7 +7,6 @@
     
     {% set actions = {
         'edit': url_for('stadiums.stadium_edit', stadium_id=stadium.stadium_id),
-        'delete': url_for('stadiums.delete_stadium', stadium_id=stadium.stadium_id)
     } %}
     {% include 'Components/side_table.html' %}
 {% endblock %}

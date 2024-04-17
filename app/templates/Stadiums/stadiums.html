@@ -45,7 +45,6 @@
                     {% set actions = {
                     'view': url_for('stadiums.stadium_details', stadium_id=stadium.stadium_id),
                     'edit': url_for('stadiums.stadium_edit', stadium_id=stadium.stadium_id),
-                    'delete': url_for('stadiums.delete_stadium', stadium_id=stadium.stadium_id)
                     } %}
                     {% include 'Components/side_table.html' %}
                 </td>

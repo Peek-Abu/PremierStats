@@ -1,4 +1,6 @@
 {% extends 'base.html' %}
+<!-- 'edit': url_for('countries.country_edit', c_name=country.c_name), -->
+<!-- 'delete': url_for('countries.delete_country', c_name=country.c_name)-->
 
 {% block content %}
 <div class="container">
@@ -11,9 +13,8 @@
     </div>
     {% set item = country %}
     {% set actions = {
-        'edit': url_for('countries.country_edit', c_name=country.c_name),
-        'delete': url_for('countries.delete_country', c_name=country.c_name)
     } %}
+    
     {% include 'Components/side_table.html' %}
 </div>
 {% endblock %}

@@ -18,6 +18,7 @@ def createPlayer():
     assists = player_stats['assists']
     stats = Stats(goals=goals, appearances=appearances, assists=assists)
     db.session.add(stats)
+    db.session.commit()
 
     new_player = Player(p_name=p_name, nationality=nationality, position=position, age=age, team_name=team_name,
                         player_stats=stats.stats_id)
