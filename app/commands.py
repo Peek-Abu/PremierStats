@@ -201,8 +201,21 @@ def seed_csv_data():
                 team.home_stadium = currIndex
         currIndex += 1 
 
-
     
+    # events = [
+    #     Event(match_id=1, player_involved=1, description='Goal', event_type='Goals', minute=20),
+    #     Event(match_id=1, player_involved=2, description='Yellow card', event_type='Cards', minute=30),
+    #     Event(match_id=14, player_involved=3, description='Substitution', event_type='Substitutions', minute=80),
+    #     Event(match_id=24, player_involved=4, description='Goal', event_type='Goals', minute=90),
+    #     Event(match_id=24, player_involved=5, description='Red card', event_type='Cards', minute=70),
+    #     Event(match_id=24, player_involved=6, description='Substitution', event_type='Substitutions', minute=85),
+    #     Event(match_id=24, player_involved=7, description='Goal', event_type='Goals', minute=60),
+    # ]
 
-    db.session.add_all(leagues + countries + refereesTable + managers + stadiums + teams + matches + odds + stats + players)
+    # assists = [
+    #     Assist(assisting_player=2, goal=1),
+    #     Assist(assisting_player=2, goal=7)
+    # ]
+
+    db.session.add_all(leagues + countries + refereesTable + managers + stadiums + teams + matches + odds + stats + players + events + assists)
     db.session.commit()

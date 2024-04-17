@@ -70,7 +70,7 @@ CREATE TABLE `Match` (
     scoreline VARCHAR(64) not null,
     attendance INT,
     odds_id INT,
-    league varchar(64) not null,
+    league varchar(64),
     FOREIGN KEY (home) REFERENCES Team(t_name) ON DELETE RESTRICT ON UPDATE CASCADE,
     FOREIGN KEY (away) REFERENCES Team(t_name) ON DELETE RESTRICT ON UPDATE CASCADE,
     FOREIGN KEY (venue) REFERENCES Stadium(stadium_id) ON DELETE RESTRICT ON UPDATE CASCADE,
@@ -102,8 +102,8 @@ CREATE TABLE Player (
 
 CREATE TABLE Event (
     event_id INT PRIMARY KEY AUTO_INCREMENT,
-    match_id INT not null,
-    player_involved INT not null,
+    match_id INT,
+    player_involved INT,
     description VARCHAR(64),
     event_type ENUM ("Goals", "Cards", "Substitutions") not null,
     minute INT,
@@ -190,188 +190,15 @@ END;
 //
 DELIMITER ;
 
-
-INSERT INTO Event (match_id, player_involved, description, event_type, minute) VALUES
--- Chelsea vs Everton
-(1, 1, 'Goal', 'Goals', 20),
-(1, 2, 'Goal', 'Goals', 50),
-(1, 2, 'Goal', 'Goals', 70),
-(1, 2, 'Yellow Card', 'Cards', 30),
-(1, 2, 'Substitution', 'Substitutions', 60),
-(1, 1, 'Substitution', 'Substitutions', 75),
-
--- Everton vs Chelsea
-(2, 5, 'Goal', 'Goals', 60),
-(2, 6, 'Goal', 'Goals', 80),
-(2, 6, 'Goal', 'Goals', 85),
-(2, 6, 'Yellow Card', 'Cards', 40),
-(2, 6, 'Substitution', 'Substitutions', 65),
-(2, 5, 'Substitution', 'Substitutions', 70),
-
--- Athletic Bilbao vs Real Betis
-(3, 3, 'Goal', 'Goals', 35),
-(3, 4, 'Goal', 'Goals', 55),
-(3, 4, 'Goal', 'Goals', 75),
-(3, 4, 'Yellow Card', 'Cards', 60),
-(3, 3, 'Substitution', 'Substitutions', 70),
-(3, 3, 'Substitution', 'Substitutions', 80),
-
--- Real Betis vs Athletic Bilbao
-(4, 7, 'Goal', 'Goals', 45),
-(4, 7, 'Goal', 'Goals', 65),
-(4, 7, 'Goal', 'Goals', 90),
-(4, 7, 'Red Card', 'Cards', 70),
-(4, 7, 'Substitution', 'Substitutions', 75),
-(4, 7, 'Substitution', 'Substitutions', 80),
-
--- Chelsea vs Athletic Bilbao
-(5, 1, 'Goal', 'Goals', 10),
-(5, 2, 'Goal', 'Goals', 40),
-(5, 2, 'Goal', 'Goals', 85),
-(5, 2, 'Yellow Card', 'Cards', 20),
-(5, 2, 'Substitution', 'Substitutions', 65),
-(5, 1, 'Substitution', 'Substitutions', 70),
-
--- Athletic Bilbao vs Chelsea
-(6, 3, 'Goal', 'Goals', 25),
-(6, 4, 'Goal', 'Goals', 60),
-(6, 3, 'Goal', 'Goals', 90),
-(6, 4, 'Yellow Card', 'Cards', 50),
-(6, 3, 'Substitution', 'Substitutions', 70),
-(6, 3, 'Substitution', 'Substitutions', 80),
-
--- Everton vs Real Betis
-(7, 5, 'Goal', 'Goals', 15),
-(7, 5, 'Goal', 'Goals', 55),
-(7, 5, 'Goal', 'Goals', 90),
-(7, 5, 'Red Card', 'Cards', 80),
-(7, 5, 'Substitution', 'Substitutions', 65),
-(7, 5, 'Substitution', 'Substitutions', 70),
-
--- Real Betis vs Everton
-(8, 7, 'Goal', 'Goals', 30),
-(8, 7, 'Goal', 'Goals', 75),
-(8, 7, 'Goal', 'Goals', 90),
-(8, 7, 'Yellow Card', 'Cards', 60),
-(8, 7, 'Substitution', 'Substitutions', 65),
-(8, 7, 'Substitution', 'Substitutions', 70),
-
--- Chelsea vs Everton
-(9, 1, 'Goal', 'Goals', 20),
-(9, 2, 'Goal', 'Goals', 40),
-(9, 2, 'Goal', 'Goals', 70),
-(9, 2, 'Yellow Card', 'Cards', 30),
-(9, 2, 'Substitution', 'Substitutions', 65),
-(9, 1, 'Substitution', 'Substitutions', 70),
-
--- Everton vs Chelsea
-(10, 5, 'Goal', 'Goals', 15),
-(10, 6, 'Goal', 'Goals', 35),
-(10, 6, 'Goal', 'Goals', 85),
-(10, 6, 'Yellow Card', 'Cards', 40),
-(10, 6, 'Substitution', 'Substitutions', 65),
-(10, 5, 'Substitution', 'Substitutions', 70),
-
--- Athletic Bilbao vs Real Betis
-(11, 3, 'Goal', 'Goals', 25),
-(11, 4, 'Goal', 'Goals', 50),
-(11, 4, 'Goal', 'Goals', 75),
-(11, 4, 'Yellow Card', 'Cards', 55),
-(11, 3, 'Substitution', 'Substitutions', 65),
-(11, 3, 'Substitution', 'Substitutions', 70),
-
--- Real Betis vs Athletic Bilbao
-(12, 7, 'Goal', 'Goals', 35),
-(12, 7, 'Goal', 'Goals', 60),
-(12, 7, 'Goal', 'Goals', 90),
-(12, 7, 'Red Card', 'Cards', 70),
-(12, 7, 'Substitution', 'Substitutions', 75),
-(12, 7, 'Substitution', 'Substitutions', 80),
-
--- Chelsea vs Athletic Bilbao
-(13, 1, 'Goal', 'Goals', 10),
-(13, 2, 'Goal', 'Goals', 40),
-(13, 2, 'Goal', 'Goals', 85),
-(13, 2, 'Yellow Card', 'Cards', 20),
-(13, 2, 'Substitution', 'Substitutions', 65),
-(13, 1, 'Substitution', 'Substitutions', 70),
-
--- Athletic Bilbao vs Chelsea
-(14, 3, 'Goal', 'Goals', 25),
-(14, 4, 'Goal', 'Goals', 60),
-(14, 3, 'Goal', 'Goals', 90),
-(14, 4, 'Yellow Card', 'Cards', 50),
-(14, 3, 'Substitution', 'Substitutions', 70),
-(14, 3, 'Substitution', 'Substitutions', 80);
-
-
--- Chelsea vs Everton
-INSERT INTO Assist (assisting_player, goal) VALUES
-(1, 2),  -- Mason Mount's goal, Timo Werner as assister
-(2, 1),  -- Timo Werner's goal, Mason Mount as assister
-(2, 1),  -- Timo Werner's goal, Mason Mount as assister
-(5, 6),  -- Dominic Calvert-Lewin's goal, Richarlison as assister
-(5, 6),  -- Dominic Calvert-Lewin's goal, Richarlison as assister
-
--- Everton vs Chelsea
-(5, 16), -- Inaki Williams' goal, Mason Mount as assister
-(6, 16), -- Mason Mount's goal, Inaki Williams as assister
-(6, 16), -- Mason Mount's goal, Inaki Williams as assister
-(7, 46), -- Sergio Canales' goal, Nabil Fekir as assister
-(7, 46), -- Sergio Canales' goal, Nabil Fekir as assister
-
--- Athletic Bilbao vs Real Betis
-(3, 26), -- Inaki Williams' goal, Iker Muniain as assister
-(4, 26), -- Iker Muniain's goal, Inaki Williams as assister
-(4, 26), -- Iker Muniain's goal, Inaki Williams as assister
-(7, 32), -- Nabil Fekir's goal, Sergio Canales as assister
-(7, 32), -- Nabil Fekir's goal, Sergio Canales as assister
-
--- Real Betis vs Athletic Bilbao
-(7, 40), -- Sergio Canales' goal, Nabil Fekir as assister
-(7, 40), -- Sergio Canales' goal, Nabil Fekir as assister
-(7, 40), -- Sergio Canales' goal, Nabil Fekir as assister
-(7, 80), -- Nabil Fekir's goal, Sergio Canales as assister
-(7, 80), -- Nabil Fekir's goal, Sergio Canales as assister
-
--- Chelsea vs Athletic Bilbao
-(5, 34), -- Richarlison's goal, Dominic Calvert-Lewin as assister
-(5, 34), -- Richarlison's goal, Dominic Calvert-Lewin as assister
-(5, 34), -- Richarlison's goal, Dominic Calvert-Lewin as assister
-(7, 44), -- Nabil Fekir's goal, Sergio Canales as assister
-(7, 44), -- Nabil Fekir's goal, Sergio Canales as assister
-
--- Athletic Bilbao vs Chelsea
-(3, 44), -- Inaki Williams' goal, Iker Muniain as assister
-(4, 44), -- Iker Muniain's goal, Inaki Williams as assister
-(3, 44), -- Inaki Williams' goal, Iker Muniain as assister
-(7, 48), -- Sergio Canales' goal, Nabil Fekir as assister
-(7, 48), -- Sergio Canales' goal, Nabil Fekir as assister
-
--- Everton vs Real Betis
-(5, 50), -- Richarlison's goal, Dominic Calvert-Lewin as assister
-(5, 50), -- Richarlison's goal, Dominic Calvert-Lewin as assister
-(5, 50), -- Richarlison's goal, Dominic Calvert-Lewin as assister
-(7, 56), -- Nabil Fekir's goal, Sergio Canales as assister
-(7, 56), -- Nabil Fekir's goal, Sergio Canales as assister
-
--- Real Betis vs Everton
-(5, 52), -- Sergio Canales' goal, Nabil Fekir as assister
-(5, 52), -- Sergio Canales' goal, Nabil Fekir as assister
-(5, 52), -- Sergio Canales' goal, Nabil Fekir as assister
-(5, 58), -- Dominic Calvert-Lewin's goal, Richarlison as assister
-(5, 58), -- Dominic Calvert-Lewin's goal, Richarlison as assister
-
--- Chelsea vs Everton
-(1, 62), -- Timo Werner's goal, Mason Mount as assister
-(2, 62), -- Mason Mount's goal, Timo Werner as assister
-(2, 62), -- Mason Mount's goal, Timo Werner as assister
-(5, 68), -- Richarlison's goal, Dominic Calvert-Lewin as assister
-(5, 68), -- Richarlison's goal, Dominic Calvert-Lewin as assister
-
--- Everton vs Chelsea
-(5, 68), -- Richarlison's goal, Dominic Calvert-Lewin as assister
-(5, 68), -- Richarlison's goal, Dominic Calvert-Lewin as assister
-(5, 68), -- Richarlison's goal, Dominic Calvert-Lewin as assister
-(1, 70), -- Timo Werner's goal, Mason Mount as assister
-(2, 70); -- Mason Mount's goal, Timo Werner as assister
+-- When a game_match adds a ref 
+DELIMITER //
+CREATE TRIGGER update_ref_games
+AFTER INSERT ON `Match`
+FOR EACH ROW
+BEGIN
+    UPDATE Referee
+    SET games_reffed = games_reffed + 1
+    where ref_id = ref;
+END;
+//
+DELIMITER ;

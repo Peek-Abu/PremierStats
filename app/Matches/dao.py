@@ -5,6 +5,7 @@ from app.models import Match
 
 
 def createMatch():
+    print(request.form)
     ref = request.form['ref']
     game_date = datetime.strptime(request.form['game_date'], '%Y-%m-%d')
     venue = request.form['venue']
@@ -12,10 +13,10 @@ def createMatch():
     away = request.form['away']
     scoreline = request.form['scoreline']
     attendance = request.form['attendance']
-    odds_id = request.form['odds_id'] #remove this line and create a new odds object with under and over odds
+    # odds_id = request.form['odds_id'] #remove this line and create a new odds object with under and over odds
 
     new_match = Match(ref=ref, game_date=game_date, venue=venue, home=home, away=away, scoreline=scoreline,
-                      attendance=attendance, odds_id=odds_id)
+                      attendance=attendance)
     db.session.add(new_match)
     db.session.commit()
     return new_match

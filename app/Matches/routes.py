@@ -31,6 +31,7 @@ def match_edit(match_id):
 @app.route('/update_match/<int:match_id>', methods=['POST'])
 def update_match(match_id):
     try:
+        print(match_id)
         match_dao.updateMatch(match_id)
         return redirect(url_for('matches.show_matches'))
     except Exception as e:
@@ -39,6 +40,7 @@ def update_match(match_id):
 @app.route('/add_match', methods=['POST'])
 def add_match():
     try:
+        print('adding match')
         match_dao.createMatch()
         return redirect(url_for('matches.show_matches'))
     except Exception as e:
