@@ -55,7 +55,7 @@ CREATE TABLE Team (
 );
 
 CREATE TABLE Odds (
-    odds_id INT PRIMARY KEY,
+    odds_id INT PRIMARY KEY auto_increment,
     under_odds INT,
     over_odds INT
 );

@@ -19,7 +19,8 @@ def createMatch():
     # Create a new odds object
     new_odds = Odds(under_odds=under_odds, over_odds=over_odds)
     db.session.add(new_odds)
-
+    db.session.commit()
+    
     new_match = Match(ref=ref, game_date=game_date, venue=venue, home=home, away=away, scoreline=scoreline,
                       attendance=attendance, odds_id=new_odds.odds_id)
     db.session.add(new_match)
