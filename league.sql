@@ -147,7 +147,7 @@ AFTER INSERT ON League
 FOR EACH ROW
 BEGIN
     UPDATE Country
-    SET leagues_hosted = leagues_hosted + 1;
+    SET leagues_hosted = leagues_hosted + 1
     where c_name = NEW.country_name;
 END;
 //

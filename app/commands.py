@@ -58,6 +58,8 @@ def seed_csv_data():
     players = []
     matchMap = {}
     refereesTable = []
+    events = []
+    assists = []
     # Create countries
     with open('Data/england-premier-league-players-2018-to-2019-stats.csv', 'r', encoding='utf-8') as file:
         next(file)  # Skip the header row
@@ -198,6 +200,9 @@ def seed_csv_data():
             elif team.t_name == "Wolverhampton Wanderers" and "Molineux Stadium (Wolverhampton- West Midlands)" == stadiumName:
                 team.home_stadium = currIndex
         currIndex += 1 
+
+
+    
 
     db.session.add_all(leagues + countries + refereesTable + managers + stadiums + teams + matches + odds + stats + players)
     db.session.commit()
