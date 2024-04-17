@@ -3,41 +3,11 @@
 {% block content %}
 <div class="container">
     <h2>Managers</h2>
-    <table class="table show-all">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Age</th>
-                <th>Years Managing</th>
-                <th>Titles Managed</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for manager in managers %}
-            <tr>
-                <td>
-                    {{ manager.name }}
-                </td>
-                <td>{{ manager.age }}</td>
-                <td>{{ manager.years_managing }}</td>
-                <td>{{ manager.titles_managed }}</td>
-                <td>
-                    {% set item = manager %}
-                    {% set actions = {
-                        'view': url_for('managers.manager_details', manager_id=manager.manager_id),
-                        'edit': url_for('managers.manager_edit', manager_id=manager.manager_id),
-                        'delete': url_for('managers.delete_manager', manager_id=manager.manager_id)
-                    } %}
-                    {% include 'Components/side_table.html' %}
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addManagerForm" aria-expanded="false" aria-controls="addManagerForm">
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addManagerForm"
+        aria-expanded="false" aria-controls="addManagerForm">
         Add Manager
     </button>
-    
+
     <div class="collapse" id="addManagerForm">
         <div class="card card-body">
             <form action="/add_manager" method="post">
@@ -61,6 +31,37 @@
             </form>
         </div>
     </div>
+    <table class="table show-all">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Years Managing</th>
+                <th>Titles Managed</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for manager in managers %}
+            <tr>
+                <td>
+                    {{ manager.name }}
+                </td>
+                <td>{{ manager.age }}</td>
+                <td>{{ manager.years_managing }}</td>
+                <td>{{ manager.titles_managed }}</td>
+                <td>
+                    {% set item = manager %}
+                    {% set actions = {
+                    'view': url_for('managers.manager_details', manager_id=manager.manager_id),
+                    'edit': url_for('managers.manager_edit', manager_id=manager.manager_id),
+                    'delete': url_for('managers.delete_manager', manager_id=manager.manager_id)
+                    } %}
+                    {% include 'Components/side_table.html' %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 
 {% endblock %}

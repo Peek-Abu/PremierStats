@@ -3,36 +3,6 @@
 {% block content %}
 <div class="container">
     <h2>Players</h2>
-    <table class="table show-all">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Team</th>
-                <th>Position</th>
-                <th>Nationality</th>
-                <th>Age</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for player in players %}
-            <tr>
-                <td>{{ player.p_name }}</td>
-                <td><a href="/teams/{{player.team_name}}">{{ player.team_name }}</a></td>
-                <td>{{ player.position }}</td>
-                <td><a href="/countries/{{player.nationality}}">{{ player.nationality }}</a></td>
-                <td>{{ player.age }}</td>
-                <td>
-                    {% set actions = {
-                        'view': url_for('players.player_details', player_id=player.player_id), 
-                        'edit': url_for('players.player_edit', player_id=player.player_id),
-                        'delete': url_for('players.delete_player', player_id=player.player_id)
-                    } %}
-                    {% include 'Components/side_table.html' %}
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
     <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addPlayerForm" aria-expanded="false" aria-controls="addPlayerForm">
         Add Player
     </button>
@@ -77,5 +47,35 @@
             </form>
         </div>
     </div>
+    <table class="table show-all">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Team</th>
+                <th>Position</th>
+                <th>Nationality</th>
+                <th>Age</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player in players %}
+            <tr>
+                <td>{{ player.p_name }}</td>
+                <td><a href="/teams/{{player.team_name}}">{{ player.team_name }}</a></td>
+                <td>{{ player.position }}</td>
+                <td><a href="/countries/{{player.nationality}}">{{ player.nationality }}</a></td>
+                <td>{{ player.age }}</td>
+                <td>
+                    {% set actions = {
+                        'view': url_for('players.player_details', player_id=player.player_id), 
+                        'edit': url_for('players.player_edit', player_id=player.player_id),
+                        'delete': url_for('players.delete_player', player_id=player.player_id)
+                    } %}
+                    {% include 'Components/side_table.html' %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}

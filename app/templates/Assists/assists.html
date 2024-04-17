@@ -3,32 +3,8 @@
 {% block content %}
 <div class="container">
     <h2>Assists</h2>
-    <table class="table show-all">
-        <thead>
-            <tr>
-                <th>Assisting Player</th>
-                <th>Goal Event</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for assist in assists %}
-            <tr>
-                <td><a href="/players/{{ assist.player.player_id }}">{{ assist.player.p_name }}</a></td>
-                <td><a href="/events/{{ assist.goal }}">{{ assist.goal }}</a></td>
-                <td>
-                    {% set item = assist %}
-                    {% set actions = {
-                        'view': url_for('assists.assist_details', assist_id=assist.assist_id),
-                        'edit': url_for('assists.assist_edit', assist_id=assist.assist_id),
-                        'delete': url_for('assists.delete_assist', assist_id=assist.assist_id)
-                    } %}
-                    {% include 'Components/side_table.html' %}
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addAssistForm" aria-expanded="false" aria-controls="addAssistForm">
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addAssistForm"
+        aria-expanded="false" aria-controls="addAssistForm">
         Add Assist
     </button>
 
@@ -47,5 +23,31 @@
             </form>
         </div>
     </div>
+    <table class="table show-all">
+        <thead>
+            <tr>
+                <th>Assisting Player</th>
+                <th>Goal Event</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for assist in assists %}
+            <tr>
+                <td><a href="/players/{{ assist.player.player_id }}">{{ assist.player.p_name }}</a></td>
+                <td><a href="/events/{{ assist.goal }}">{{ assist.goal }}</a></td>
+                <td>
+                    {% set item = assist %}
+                    {% set actions = {
+                    'view': url_for('assists.assist_details', assist_id=assist.assist_id),
+                    'edit': url_for('assists.assist_edit', assist_id=assist.assist_id),
+                    'delete': url_for('assists.delete_assist', assist_id=assist.assist_id)
+                    } %}
+                    {% include 'Components/side_table.html' %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
 </div>
 {% endblock %}

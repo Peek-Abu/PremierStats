@@ -3,41 +3,11 @@
 {% block content %}
 <div class="container">
     <h2>Leagues</h2>
-    <table class="table show-all">
-        <thead>
-            <tr>
-                <th>League Name</th>
-                <th>Country</th>
-                <th>Founded</th>
-                <th>Total Teams</th>
-                <th>Total Games</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for league in leagues %}
-            <tr>
-                <td>{{ league.league_name }}</td>
-                <td><a href="/countries/{{league.country_name}}">{{ league.country_name }}</a></td>
-                <td>{{ league.founded }}</td>
-                <td>{{ league.total_teams }}</td>
-                <td>{{ league.total_games }}</td>
-                <td>
-                    {% set item = league %}
-                    {% set actions = {
-                        'view': url_for('leagues.league_details', league_name=league.league_name),
-                        'edit': url_for('leagues.league_edit', league_name=league.league_name),
-                        'delete': url_for('leagues.delete_league', league_name=league.league_name)
-                    } %}
-                    {% include 'Components/side_table.html' %}
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addLeagueForm" aria-expanded="false" aria-controls="addLeagueForm">
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addLeagueForm"
+        aria-expanded="false" aria-controls="addLeagueForm">
         Add League
     </button>
-    
+
     <div class="collapse" id="addLeagueForm">
         <div class="card card-body">
             <form action="/add_league" method="post">
@@ -65,5 +35,37 @@
             </form>
         </div>
     </div>
+    <table class="table show-all">
+        <thead>
+            <tr>
+                <th>League Name</th>
+                <th>Country</th>
+                <th>Founded</th>
+                <th>Total Teams</th>
+                <th>Total Games</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for league in leagues %}
+            <tr>
+                <td>{{ league.league_name }}</td>
+                <td><a href="/countries/{{league.country_name}}">{{ league.country_name }}</a></td>
+                <td>{{ league.founded }}</td>
+                <td>{{ league.total_teams }}</td>
+                <td>{{ league.total_games }}</td>
+                <td>
+                    {% set item = league %}
+                    {% set actions = {
+                    'view': url_for('leagues.league_details', league_name=league.league_name),
+                    'edit': url_for('leagues.league_edit', league_name=league.league_name),
+                    'delete': url_for('leagues.delete_league', league_name=league.league_name)
+                    } %}
+                    {% include 'Components/side_table.html' %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
 </div>
 {% endblock %}
