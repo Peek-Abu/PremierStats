@@ -7,7 +7,7 @@ config = {
     "address": "localhost",
     "schema": "league",
     "username": "root",
-    "password": "Yawn662130!"
+    "password": "Orbbyabc123!"
 }
 uri = "mysql+pymysql://" + \
       config['username'] + ":" + \

@@ -37,6 +37,7 @@ def update_player(player_id):
 @app.route('/add_player', methods=['POST'])
 def add_player():
     try:
+        print("nig")
         player_dao.createPlayer()
         return redirect(url_for('players.show_players'))
     except Exception as e:
