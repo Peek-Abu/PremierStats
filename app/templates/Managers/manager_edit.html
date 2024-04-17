@@ -26,9 +26,10 @@
         </div>
         <button type="submit" class="btn btn-primary">Update Manager</button>
     </form>
-    <form action="/delete_manager/{{ manager.manager_id }}" method="post" class="d-inline">
-        <input type="hidden" name="_method" value="DELETE">
-        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
-    </form>
+    {% set item = manager %}
+    {% set actions = {
+        'delete': url_for('managers.delete_manager', manager_id=manager.manager_id)
+    } %}
+    {% include 'Components/side_table.html' %}
 </div>
 {% endblock %}

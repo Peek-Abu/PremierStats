@@ -22,22 +22,22 @@
                 <td>{{ manager.years_managing }}</td>
                 <td>{{ manager.titles_managed }}</td>
                 <td>
-                    <a href="/managers/edit/{{ manager.manager_id }}" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-                    <form action="/delete_manager/{{ manager.manager_id }}" method="post" class="d-inline">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
-                    </form>
+                    {% set item = manager %}
+                    {% set actions = {
+                        'view': url_for('managers.manager_details', manager_id=manager.manager_id),
+                        'edit': url_for('managers.manager_edit', manager_id=manager.manager_id),
+                        'delete': url_for('managers.delete_manager', manager_id=manager.manager_id)
+                    } %}
+                    {% include 'Components/side_table.html' %}
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-    <!-- Add Manager Button -->
     <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addManagerForm" aria-expanded="false" aria-controls="addManagerForm">
         Add Manager
     </button>
     
-    <!-- Collapsible Add Manager Form -->
     <div class="collapse" id="addManagerForm">
         <div class="card card-body">
             <form action="/add_manager" method="post">

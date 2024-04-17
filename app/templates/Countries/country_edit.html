@@ -12,8 +12,12 @@
             <label for="leagues_hosted" class="form-label">Leagues Hosted:</label>
             <input type="number" class="form-control" id="leagues_hosted" name="leagues_hosted" value="{{ country.leagues_hosted }}" required>
         </div>
-        <!-- Add more fields as necessary -->
         <button type="submit" class="btn btn-primary">Update Country</button>
+        {% set item = country %}
+        {% set actions = {
+            'delete': url_for('countries.delete_country', c_name=country.c_name)
+        } %}
+        {% include 'Components/side_table.html' %}
     </form>
 </div>
 {% endblock %}

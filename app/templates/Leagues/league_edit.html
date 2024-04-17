@@ -24,10 +24,11 @@
             <input type="number" class="form-control" id="total_games" name="total_games" value="{{ league.total_games }}" required>
         </div>
         <button type="submit" class="btn btn-primary">Update League</button>
-        <form action="/delete_league/{{ league.league_name }}" method="post" class="d-inline">
-            <input type="hidden" name="_method" value="DELETE">
-            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
-        </form>
+        {% set item = league %}
+        {% set actions = {
+            'delete': url_for('leagues.delete_league', league_name=league.league_name)
+        } %}
+        {% include 'Components/side_table.html' %}
     </form>
     
 </div>

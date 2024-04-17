@@ -19,5 +19,10 @@
         <label class="form-label">Games Reffed:</label>
         <p>{{ referee.games_reffed }}</p>
     </div>
+    {% set actions = {
+        'edit': url_for('referees.referee_edit', ref_id=referee.ref_id),
+        'delete': url_for('referees.delete_referee', ref_id=referee.ref_id)
+    } %}
+    {% include 'Components/side_table.html' %}
 </div>
 {% endblock %}

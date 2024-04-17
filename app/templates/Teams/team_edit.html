@@ -38,9 +38,9 @@
         </div>
         <button type="submit" class="btn btn-primary">Update Team</button>
     </form>
-    <form class="d-inline" action="{{ url_for('teams.delete_team', t_name=team.t_name) }}" method="post">
-        <input type="hidden" name="_method" value="DELETE">
-        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
-    </form>
+    {% set actions = {
+        'delete': url_for('teams.delete_team', t_name=team.t_name)
+    } %}
+    {% include 'Components/side_table.html' %}
 </div>
 {% endblock %}

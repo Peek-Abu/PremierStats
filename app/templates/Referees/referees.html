@@ -18,11 +18,12 @@
               <td>{{ referee.age }}</td>
               <td>{{ referee.games_reffed }}</td>
               <td>
-                  <a href="/referees/edit/{{ referee.ref_id }}" class="btn btn-warning"><i class="fa fa-pencil d-inline"></i></a>
-                  <form action="/delete_referee/{{ referee.ref_id }}" method="post" class="d-inline">
-                      <input type="hidden" name="_method" value="DELETE">
-                      <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
-                  </form>
+                {% set actions = {
+                    'view': url_for('referees.referee_details', ref_id=referee.ref_id),
+                    'edit': url_for('referees.referee_edit', ref_id=referee.ref_id),
+                    'delete': url_for('referees.delete_referee', ref_id=referee.ref_id)
+                } %}
+                {% include 'Components/side_table.html' %}
               </td>
           </tr>
           {% endfor %}

@@ -8,7 +8,7 @@ def show_leagues():
         all_leagues = league_dao.getAllLeagues()
         return render_template('Leagues/leagues.html', leagues=all_leagues)
     except Exception as e:
-        return str(e)
+        return render_template('Components/errors.html', error_message=str(e))
     
 @app.route('/leagues/<string:league_name>')
 def league_details(league_name):
@@ -16,7 +16,7 @@ def league_details(league_name):
         league = league_dao.getLeague(league_name)
         return render_template('Leagues/league_details.html', league=league)
     except Exception as e:
-        return str(e)
+        return render_template('Components/errors.html', error_message=str(e))
 
 @app.route('/leagues/edit/<string:league_name>')
 def league_edit(league_name):
@@ -24,7 +24,7 @@ def league_edit(league_name):
         league = league_dao.getLeague(league_name)
         return render_template('Leagues/league_edit.html', league=league)
     except Exception as e:
-        return str(e)
+        return render_template('Components/errors.html', error_message=str(e))
 
 @app.route('/update_league/<string:league_name>', methods=['POST'])
 def update_league(league_name):
@@ -32,7 +32,7 @@ def update_league(league_name):
         league_dao.updateLeague(league_name)
         return redirect(url_for('leagues.show_leagues'))
     except Exception as e:
-        return str(e)
+        return render_template('Components/errors.html', error_message=str(e))
 
 @app.route('/add_league', methods=['POST'])
 def add_league():
@@ -40,7 +40,7 @@ def add_league():
         league_dao.createLeague()
         return redirect(url_for('leagues.show_leagues'))
     except Exception as e:
-        return str(e)
+        return render_template('Components/errors.html', error_message=str(e))
     
 @app.route('/delete_league/<string:league_name>', methods=['POST'])
 def delete_league(league_name):
@@ -48,4 +48,4 @@ def delete_league(league_name):
         league_dao.deleteLeague(league_name)
         return redirect(url_for('leagues.show_leagues'))
     except Exception as e:
-        return str(e)
+        return render_template('Components/errors.html', error_message=str(e))

@@ -41,3 +41,56 @@ def reset_db():
     db.drop_all()
     db.create_all()
     print("Database has been reset.")
+
+@click.command(name='seed_csv_data')
+@with_appcontext
+def seed_csv_data():
+    """Populates the database with data from CSV files."""
+    countries = set()
+    referees = {}
+    with open('Data/england-premier-league-players-2018-to-2019-stats.csv', 'r', encoding='utf-8') as file:
+        next(file)  # Skip the header row
+        for line in file:
+            data = line.strip().split(',')
+            countries.add(data[11])  
+
+    with open('Data/england-premier-league-matches-2018-to-2019-stats.csv', 'r', encoding='utf-8') as file:
+        next(file)  # Skip the header row
+        for line in file:
+            data = line.strip().split(',')
+            referee = data[6]  # Assuming the referee is at index 6
+            if referee in referees:
+                referees[referee] += 1
+            else:
+                referees[referee] = 1
+
+    countries = [Country(c_name=country) for country in countries]
+    referees = [Referee(name=referee, age=45, games_reffed=games_reffed) for referee, games_reffed in referees.items()]
+    managers = [
+        Manager(name="Jurgen Klopp", age=53, years_managing=20, titles_managed=5),
+        # Manager(name="Pep Guardiola", age=49, years_managing=15, titles_managed=3),
+        # Manager(name="Ole Gunnar Solskjaer", age=47, years_managing=10, titles_managed=1),
+        Manager(name="Unai Emery", age=38, years_managing=0, titles_managed=0), # Arsenal
+        Manager(name="Dean Smith", age=45, years_managing=0, titles_managed=0), # Aston Villa
+        Manager(name="Eddie Howe", age=42, years_managing=0, titles_managed=0), # Bournemouth
+        Manager(name="Chris Hughton", age=50, years_managing=0, titles_managed=0), # Brighton
+        Manager(name="Sean Dyche", age=48, years_managing=6, titles_managed=0), # Burnley
+        Manager(name="Maurizio Sarri", age=42, years_managing=0, titles_managed=0), # Chelsea
+        Manager(name="Roy Hodgson", age=60, years_managing=0, titles_managed=0), # Crystal Palace
+        Manager(name="Marco Silva", age=43, years_managing=0, titles_managed=0), # Everton
+        Manager(name="Scott Parker", age=40, years_managing=0, titles_managed=0), # Fulham
+        Manager(name="Jan Siewert", age=38, years_managing=0, titles_managed=0), # Huddersfield
+        Manager(name="Brendan Rodgers", age=47, years_managing=0, titles_managed=0), # Leicester
+        Manager(name="Jurgen Klopp", age=53, years_managing=0, titles_managed=0), # Liverpool
+        Manager(name="Pep Guardiola", age=49, years_managing=0, titles_managed=0), # Manchester City
+        Manager(name="Ole Gunnar Solskjaer", age=47, years_managing=0, titles_managed=0), # Manchester United
+        Manager(name="Rafael Benitez", age=60, years_managing=0, titles_managed=0), # Newcastle
+        Manager(name="Ralph Hasenhuttl", age=52, years_managing=0, titles_managed=0), # Southampton
+        Manager(name="Mauricio Pochettino", age=48, years_managing=0, titles_managed=0), # Tottenham
+        Manager(name="Javi Gracia", age=50, years_managing=0, titles_managed=0), # Watford
+        Manager(name="Manuel Pellegr", age=65, years_managing=0, titles_managed=0), # West Ham
+        Manager(name="Nuno Espirito Santo", age=46, years_managing=0, titles_managed=0), # Wolves
+
+    ]
+    db.session.add_all(countries + referees)
+    db.session.commit()

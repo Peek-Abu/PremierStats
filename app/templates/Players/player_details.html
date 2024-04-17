@@ -36,5 +36,10 @@
         <label class="form-label">Assists:</label>
         <p>{{ player.stats.assists }}</p>
     </div>
+    {% set actions = {
+        'edit': url_for('players.player_edit', player_id=player.player_id),
+        'delete': url_for('players.delete_player', player_id=player.player_id)
+    } %}
+    {% include 'Components/side_table.html' %}
 </div>
 {% endblock %}

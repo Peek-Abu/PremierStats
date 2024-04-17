@@ -4,10 +4,10 @@
     <h1>{{ stadium.name }}</h1>
     <p>Seats: {{ stadium.seats }}</p>
     <p>Founded: {{ stadium.founded }}</p>
-
-    <a href="/stadiums/edit/{{ stadium.stadium_id }}" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-    <form action="/delete_stadium/{{ stadium.stadium_id }}" method="post" class="d-inline">
-        <input type="hidden" name="_method" value="DELETE">
-        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
-    </form>
+    
+    {% set actions = {
+        'edit': url_for('stadiums.stadium_edit', stadium_id=stadium.stadium_id),
+        'delete': url_for('stadiums.delete_stadium', stadium_id=stadium.stadium_id)
+    } %}
+    {% include 'Components/side_table.html' %}
 {% endblock %}

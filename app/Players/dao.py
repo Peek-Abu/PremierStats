@@ -34,7 +34,7 @@ def updatePlayer(player_id):
     player.position = request.form['position']
     player.age = request.form['age']
     player.team_name = request.form['team_name']
-    player.player_stats = request.form['player_stats']
+    # player.player_stats = request.form['player_stats']
     db.session.commit()
     return player
 

@@ -18,11 +18,13 @@
               </td>
               <td>{{ country.leagues_hosted }}</td>
               <td>
-                  <a href="/countries/edit/{{ country.c_name }}" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-                  <form action="/delete_country/{{ country.c_name }}" method="post" class="d-inline">
-                      <input type="hidden" name="_method" value="DELETE">
-                      <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
-                  </form>
+                  {% set item = country %}
+                  {% set actions = {
+                        'view': url_for('countries.country_details', c_name=country.c_name),
+                        'edit': url_for('countries.country_edit', c_name=country.c_name),
+                        'delete': url_for('countries.delete_country', c_name=country.c_name)
+                  } %}
+                  {% include 'Components/side_table.html' %}
               </td>
           </tr>
           {% endfor %}

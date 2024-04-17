@@ -22,11 +22,12 @@
                 <td><a href="/countries/{{player.nationality}}">{{ player.nationality }}</a></td>
                 <td>{{ player.age }}</td>
                 <td>
-                    <a href="/players/edit/{{ player.player_id }}" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
-                    <form action="/delete_player/{{ player.player_id }}" method="post" class="d-inline">
-                        <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
-                    </form>
+                    {% set actions = {
+                        'view': url_for('players.player_details', player_id=player.player_id), 
+                        'edit': url_for('players.player_edit', player_id=player.player_id),
+                        'delete': url_for('players.delete_player', player_id=player.player_id)
+                    } %}
+                    {% include 'Components/side_table.html' %}
                 </td>
             </tr>
             {% endfor %}
@@ -58,6 +59,19 @@
                 <div class="mb-3">
                     <label for="age" class="form-label">Age:</label>
                     <input type="number" class="form-control" id="age" name="age" required>
+                </div>
+                <h3>Stats</h3>
+                <div class="mb-3">
+                    <label for="goals">Goals</label>
+                    <input type="number" class="form-control" id="goals" name="goals">
+                </div>
+                <div class="mb-3">
+                    <label for="appearances">Appearances</label>
+                    <input type="number" class="form-control" id="appearances" name="appearances">
+                </div>
+                <div class="mb-3">
+                    <label for="assists">Assists</label>
+                    <input type="number" class="form-control" id="assists" name="assists">
                 </div>
                 <button type="submit" class="btn btn-success">Add Player</button>
             </form>

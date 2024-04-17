@@ -8,7 +8,7 @@ def show_teams():
         all_teams = team_dao.getAllTeams()
         return render_template('Teams/teams.html', teams=all_teams)
     except Exception as e:
-        return str(e)
+        return render_template('Components/errors.html', error_message=str(e))
     
 @app.route('/teams/<team_name>')
 def team_details(team_name):
@@ -17,7 +17,7 @@ def team_details(team_name):
         team = team_dao.getTeam(team_name)
         return render_template('Teams/team_details.html', team=team)
     except Exception as e:
-        return str(e)
+        return render_template('Components/errors.html', error_message=str(e))
 
 @app.route('/teams/edit/<team_name>')
 def team_edit(team_name):
@@ -25,7 +25,7 @@ def team_edit(team_name):
         team = team_dao.getTeam(team_name)
         return render_template('Teams/team_edit.html', team=team)
     except Exception as e:
-        return str(e)
+        return render_template('Components/errors.html', error_message=str(e))
 
 @app.route('/update_team/<t_name>', methods=['POST'])
 def update_team(t_name):
@@ -33,7 +33,7 @@ def update_team(t_name):
         team_dao.updateTeam(t_name)
         return redirect(url_for('teams.show_teams'))
     except Exception as e:
-        return str(e)
+        return render_template('Components/errors.html', error_message=str(e))
 
 @app.route('/add_team', methods=['POST'])
 def add_team():
@@ -41,7 +41,7 @@ def add_team():
         team_dao.createTeam()
         return redirect(url_for('teams.show_teams'))
     except Exception as e:
-        return str(e)
+        return render_template('Components/errors.html', error_message=str(e))
     
 @app.route('/delete_team/<t_name>', methods=['POST'])
 def delete_team(t_name):
@@ -49,4 +49,4 @@ def delete_team(t_name):
         team_dao.deleteTeam(t_name)
         return redirect(url_for('teams.show_teams'))
     except Exception as e:
-        return str(e)
+        return render_template('Components/errors.html', error_message=str(e))

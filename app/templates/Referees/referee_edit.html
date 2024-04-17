@@ -22,9 +22,9 @@
         </div>
         <button type="submit" class="btn btn-primary">Update Referee</button>
     </form>
-    <form class="d-inline" action="{{ url_for('referees.delete_referee', ref_id=referee.ref_id) }}" method="post">
-        <input type="hidden" name="_method" value="DELETE">
-        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
-    </form>
+    {% set actions = {
+        'delete': url_for('referees.delete_referee', ref_id=referee.ref_id)
+    } %}
+    {% include 'Components/side_table.html' %}
 </div>
 {% endblock %}
