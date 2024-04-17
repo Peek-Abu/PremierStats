@@ -150,7 +150,7 @@ def seed_csv_data():
 
     currIndex = 1
     for stadiumName, stadiumAttendance in stadiumsSet.items():
-        stadium = Stadium(stadium_id=currIndex, name=stadiumName, seats=stadiumAttendance, founded=datetime.strptime("1995-10-23", '%Y-%m-%d'))
+        stadium = Stadium(stadium_id=currIndex, stadium_name=stadiumName, seats=stadiumAttendance, founded=datetime.strptime("1995-10-23", '%Y-%m-%d'))
         stadiums.append(stadium)
         for match in matches:
             if match.venue == stadiumName:

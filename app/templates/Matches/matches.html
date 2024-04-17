@@ -71,7 +71,7 @@
                 <td><a href="/teams/{{ match.away }}">{{ match.away }}</a></td>
                 <td>{{ match.scoreline }}</td>
                 <td>{{ match.attendance }}</td>
-                <td><a href="/stadiums/{{ match.stadium.stadium_id }}">{{ match.stadium.name }}</a></td>
+                <td><a href="/stadiums/{{ match.stadium.stadium_id }}">{{ match.stadium.stadium_name }}</a></td>
                 <td>
                     {% set item = match %}
                     {% set actions = {
