@@ -1,7 +1,7 @@
 from flask import request
 
 from app.database import db
-from app.models import Player
+from app.models import Player, Stats
 
 
 def createPlayer():
@@ -12,8 +12,15 @@ def createPlayer():
     team_name = request.form['team_name']
     player_stats = request.form['player_stats']
 
+    # Insert into stats
+    goals = player_stats['goals']
+    appearances = player_stats['appearances']
+    assists = player_stats['assists']
+    stats = Stats(goals=goals, appearances=appearances, assists=assists)
+    db.session.add(stats)
+
     new_player = Player(p_name=p_name, nationality=nationality, position=position, age=age, team_name=team_name,
-                        player_stats=player_stats)
+                        player_stats=stats.stats_id)
     db.session.add(new_player)
     db.session.commit()
     return new_player
@@ -34,7 +41,19 @@ def updatePlayer(player_id):
     player.position = request.form['position']
     player.age = request.form['age']
     player.team_name = request.form['team_name']
-    # player.player_stats = request.form['player_stats']
+    player.player_stats = request.form['player_stats']
+
+    # Update stats if necessary
+    goals = request.form['player_stats']['goals']
+    appearances = request.form['player_stats']['appearances']
+    assists = request.form['player_stats']['assists']
+    stats = Stats.query.get_or_404(player)
+    if goals:
+        stats.goals = goals
+    if appearances:
+        stats.appearances = appearances
+    if assists:
+        stats.assists = assists
     db.session.commit()
     return player
 

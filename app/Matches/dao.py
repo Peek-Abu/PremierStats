@@ -1,7 +1,7 @@
 from flask import request
 from datetime import datetime
 from app.database import db
-from app.models import Match
+from app.models import Match, Odds
 
 
 def createMatch():
@@ -13,10 +13,16 @@ def createMatch():
     away = request.form['away']
     scoreline = request.form['scoreline']
     attendance = request.form['attendance']
-    # odds_id = request.form['odds_id'] #remove this line and create a new odds object with under and over odds
+    under_odds = request.form['under_odds']
+    over_odds = request.form['over_odds']
 
+    # Create a new odds object
+    new_odds = Odds(under_odds=under_odds, over_odds=over_odds)
+    db.session.add(new_odds)
+    db.session.commit()
+    
     new_match = Match(ref=ref, game_date=game_date, venue=venue, home=home, away=away, scoreline=scoreline,
-                      attendance=attendance)
+                      attendance=attendance, odds_id=new_odds.odds_id)
     db.session.add(new_match)
     db.session.commit()
     return new_match
@@ -39,7 +45,12 @@ def updateMatch(match_id):
     match.away = request.form['away']
     match.scoreline = request.form['scoreline']
     match.attendance = request.form['attendance']
-    # match.odds_id = request.form['odds_id']
+
+    # Update the odds object
+    odds = Odds.query.get_or_404(match.odds_id)
+    odds.under_odds = request.form['under_odds']
+    odds.over_odds = request.form['over_odds']
+    
     db.session.commit()
     return match
 
