@@ -3,12 +3,26 @@ from app.database import db
 from app.commands import seed_db, reset_db, seed_csv_data
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///yourdatabase.db'
-db.init_app(app)
+config = {
+    "address": "localhost",
+    "schema": "league",
+    "username": "root",
+    "password": "Yawn662130!"
+}
+uri = "mysql+pymysql://" + \
+      config['username'] + ":" + \
+      config['password'] + "@" + \
+      config['address'] + "/" + \
+      config['schema']
 
+app.config['SQLALCHEMY_DATABASE_URI'] = uri
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = 'FALSE'
+
+
+
+db.init_app(app)
 with app.app_context():
     db.create_all()
-
 
 from app.Managers.routes import app as managers_routes
 from app.Assists.routes import app as assists_routes

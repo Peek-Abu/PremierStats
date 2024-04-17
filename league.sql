@@ -8,21 +8,21 @@ CREATE TABLE Country (
 );
 
 CREATE TABLE Referee (
-    ref_id INT PRIMARY KEY,
+    ref_id INT PRIMARY KEY AUTO_INCREMENT,
     age int,
     name VARCHAR(64) not null,
     games_reffed INT
 );
 
 CREATE TABLE Stadium (
-    stadium_id INT PRIMARY KEY,
+    stadium_id INT PRIMARY KEY AUTO_INCREMENT,
     stadium_name varchar(64) not null,
     seats INT,
     founded DATE
 );
 
 CREATE TABLE Manager (
-    manager_id INT PRIMARY KEY,
+    manager_id INT PRIMARY KEY AUTO_INCREMENT,
     name varchar(64) not null,
     age int,
     years_managing INT,
@@ -33,7 +33,7 @@ CREATE TABLE League (
     league_name VARCHAR(64) PRIMARY KEY,
     country_name VARCHAR(64),
     founded DATE,
-    total_teams INT,
+    total_teams INT, 
     total_games INT,
     FOREIGN KEY (country_name) REFERENCES Country(c_name) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -112,7 +112,7 @@ CREATE TABLE Event (
 );
 
 CREATE TABLE Assist (
-    assist_id INT PRIMARY KEY,
+    assist_id INT PRIMARY KEY AUTO_INCREMENT,
     assisting_player INT,
     goal INT,
     FOREIGN KEY (assisting_player) REFERENCES Player(player_id) ON DELETE RESTRICT ON UPDATE CASCADE,
