@@ -15,7 +15,7 @@ class Referee(db.Model):
 class Stadium(db.Model):
     __tablename__ = 'Stadium'
     stadium_id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64))
+    stadium_name = db.Column(db.String(64))
     seats = db.Column(db.Integer)
     founded = db.Column(db.Date)
 

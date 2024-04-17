@@ -71,7 +71,7 @@
                 <td>{{ team.founded }}</td>
                 <td>{{ team.total_titles }}</td>
                 <td>{{ team.historical_performance }}</td>
-                <td><a href="/stadiums/{{ team.stadium.stadium_id }}">{{ team.stadium.name }}</a></td>
+                <td><a href="/stadiums/{{ team.stadium.stadium_id }}">{{ team.stadium.stadium_name }}</a></td>
                 <td><a href="/leagues/{{ team.league_name }}">{{ team.league_name }}</a></td>
                 <td>
                     {% set actions = {

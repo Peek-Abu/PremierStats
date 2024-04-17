@@ -8,7 +8,7 @@ def createStadium():
     seats = request.form['seats']
     founded = request.form['founded']
     founded_date = datetime.strptime(founded, '%Y-%m-%d').date()
-    new_stadium = Stadium(name=name, seats=seats, founded=founded_date)
+    new_stadium = Stadium(stadium_name=name, seats=seats, founded=founded_date)
     db.session.add(new_stadium)
     db.session.commit()
     return new_stadium
@@ -21,7 +21,7 @@ def getStadium(stadium_id):
 
 def updateStadium(stadium_id):
     stadium = getStadium(stadium_id)
-    stadium.name = request.form['name']
+    stadium.stadium_name = request.form['name']
     stadium.seats = request.form['seats']
     founded = request.form['founded']
     stadium.founded = datetime.strptime(founded, '%Y-%m-%d').date()
