@@ -3,42 +3,10 @@
 {% block content %}
 <div class="container">
     <h2>Events</h2>
-    <table class="table show-all">
-        <thead>
-            <tr>
-                <th>Player Involved</th>
-                <th>Description</th>
-                <th>Event Type</th>
-                <th>Minute</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for event in events %}
-            <tr>
-                <td><a href="/players/{{event.player.player_id}}">{{ event.player.p_name }}</a></td>
-                <td>{{ event.description }}</td>
-                <td>{{ event.event_type }}</td>
-                <td>{{ event.minute }} </td>
-                <td>
-                    {% set item = event %}
-                    {% set actions = {
-                        'view': url_for('events.event_details', event_id=event.event_id),
-                        'edit': url_for('events.event_edit', event_id=event.event_id),
-                        'delete': url_for('events.delete_event', event_id=event.event_id)
-                    } %}
-                    {% include 'Components/side_table.html' %}
-                   
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addEventForm" aria-expanded="false" aria-controls="addEventForm">
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addEventForm"
+        aria-expanded="false" aria-controls="addEventForm">
         Add Event
     </button>
-    
-    
     <div class="collapse" id="addEventForm">
         <div class="card card-body">
             <form action="/add_event" method="post">
@@ -70,6 +38,36 @@
             </form>
         </div>
     </div>
+    <table class="table show-all">
+        <thead>
+            <tr>
+                <th>Player Involved</th>
+                <th>Description</th>
+                <th>Event Type</th>
+                <th>Minute</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in events %}
+            <tr>
+                <td><a href="/players/{{event.player.player_id}}">{{ event.player.p_name }}</a></td>
+                <td>{{ event.description }}</td>
+                <td>{{ event.event_type }}</td>
+                <td>{{ event.minute }} </td>
+                <td>
+                    {% set item = event %}
+                    {% set actions = {
+                    'view': url_for('events.event_details', event_id=event.event_id),
+                    'edit': url_for('events.event_edit', event_id=event.event_id),
+                    'delete': url_for('events.delete_event', event_id=event.event_id)
+                    } %}
+                    {% include 'Components/side_table.html' %}
+
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 
 {% endblock %}

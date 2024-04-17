@@ -3,49 +3,12 @@
 {% block content %}
 <div class="container">
     <h2>Teams</h2>
-    <table class="table show-all">
-        <thead>
-            <tr>
-                <th>Team Name</th>
-                <th>Manager</th>
-                <th>Nationality</th>
-                <th>Founded</th>
-                <th>Total Titles</th>
-                <th>Historical Performance</th>
-                <th>Home Stadium</th>
-                <th>League</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for team in teams %}
-            <tr>
-               
-                <td>{{ team.t_name }}</td>
-                <td><a href="/managers/{{team.manager.manager_id}}">{{ team.manager.name }}</a></td>
-                <td><a href="/countries/{{ team.nationality }}">{{ team.nationality }}</a></td>
-                <td>{{ team.founded }}</td>
-                <td>{{ team.total_titles }}</td>
-                <td>{{ team.historical_performance }}</td>
-                <td><a href="/stadiums/{{ team.stadium.stadium_id }}">{{ team.stadium.name }}</a></td>
-                <td><a href="/leagues/{{ team.league_name }}">{{ team.league_name }}</a></td>
-                <td>
-                    {% set actions = {
-                        'view': url_for('teams.team_details', team_name=team.t_name),
-                        'edit': url_for('teams.team_edit', team_name=team.t_name),
-                        'delete': url_for('teams.delete_team', t_name=team.t_name)
-                    } %}
-                    {% include 'Components/side_table.html' %}
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-
-     <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addManagerForm" aria-expanded="false" aria-controls="addManagerForm">
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addManagerForm"
+        aria-expanded="false" aria-controls="addManagerForm">
         Add Team
     </button>
 
-     <div class="collapse" id="addManagerForm">
+    <div class="collapse" id="addManagerForm">
         <div class="card card-body">
             <form action="/add_team" method="post">
                 <div class="mb-3">
@@ -70,7 +33,8 @@
                 </div>
                 <div class="mb-3">
                     <label for="historical_performance" class="form-label">Historical Performance:</label>
-                    <input type="number" class="form-control" id="historical_performance" name="historical_performance" required>
+                    <input type="number" class="form-control" id="historical_performance" name="historical_performance"
+                        required>
                 </div>
                 <div class="mb-3">
                     <label for="home_stadium" class="form-label">Home Stadium:</label>
@@ -84,6 +48,45 @@
             </form>
         </div>
     </div>
+    <table class="table show-all">
+        <thead>
+            <tr>
+                <th>Team Name</th>
+                <th>Manager</th>
+                <th>Nationality</th>
+                <th>Founded</th>
+                <th>Total Titles</th>
+                <th>Historical Performance</th>
+                <th>Home Stadium</th>
+                <th>League</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for team in teams %}
+            <tr>
+
+                <td>{{ team.t_name }}</td>
+                <td><a href="/managers/{{team.manager.manager_id}}">{{ team.manager.name }}</a></td>
+                <td><a href="/countries/{{ team.nationality }}">{{ team.nationality }}</a></td>
+                <td>{{ team.founded }}</td>
+                <td>{{ team.total_titles }}</td>
+                <td>{{ team.historical_performance }}</td>
+                <td><a href="/stadiums/{{ team.stadium.stadium_id }}">{{ team.stadium.name }}</a></td>
+                <td><a href="/leagues/{{ team.league_name }}">{{ team.league_name }}</a></td>
+                <td>
+                    {% set actions = {
+                    'view': url_for('teams.team_details', team_name=team.t_name),
+                    'edit': url_for('teams.team_edit', team_name=team.t_name),
+                    'delete': url_for('teams.delete_team', t_name=team.t_name)
+                    } %}
+                    {% include 'Components/side_table.html' %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
 </div>
 
 {% endblock %}

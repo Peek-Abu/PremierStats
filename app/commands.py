@@ -1,4 +1,5 @@
 from datetime import datetime
+import random
 import click
 from flask.cli import with_appcontext
 from app.database import db
@@ -48,49 +49,145 @@ def seed_csv_data():
     """Populates the database with data from CSV files."""
     countries = set()
     referees = {}
+    stadiumsSet = {}
+    stadiums = []
+    teams = []
+    matches = []
+    odds = []
+    stats = []
+    players = []
+    # Create countries
     with open('Data/england-premier-league-players-2018-to-2019-stats.csv', 'r', encoding='utf-8') as file:
         next(file)  # Skip the header row
-        for line in file:
+        for index, line in enumerate(file):
             data = line.strip().split(',')
             countries.add(data[11])  
 
+            new_stats = Stats(
+                stats_id=index,
+                goals=data[15],
+                appearances=data[12],
+                assists=data[18]
+            )
+            stats.append(new_stats)
+
+            new_player = Player(
+                p_name=data[0],
+                nationality=data[11],
+                position=data[6],
+                age=data[1],
+                team_name=data[7],
+                player_stats=index
+            )       
+            players.append(new_player)
+    # Create referees and stadiums
     with open('Data/england-premier-league-matches-2018-to-2019-stats.csv', 'r', encoding='utf-8') as file:
         next(file)  # Skip the header row
-        for line in file:
+        for index, line in enumerate(file):
             data = line.strip().split(',')
             referee = data[6]  # Assuming the referee is at index 6
             if referee in referees:
                 referees[referee] += 1
             else:
                 referees[referee] = 1
+            attendance = int(data[3])  # Assuming the attendance is at index 3
 
-    countries = [Country(c_name=country) for country in countries]
-    referees = [Referee(name=referee, age=45, games_reffed=games_reffed) for referee, games_reffed in referees.items()]
+            stadium = data[-1]
+            stadiumsSet[stadium] = max(stadiumsSet.get(stadium) or 0, attendance)
+
+            # Create an Odds object
+            odds_home_win = float(data[-10])  # Assuming the odds for home team win are at the 10th index from the end
+            # odds_draw = float(data[-9])  # Assuming the odds for draw are at the 9th index from the end
+            odds_away_win = float(data[-8])  # Assuming the odds for away team win are at the 8th index from the end
+            oddsObject = Odds(odds_id=index, under_odds=odds_home_win, over_odds=odds_away_win)
+             # Create a Match object
+            match_date = datetime.strptime(data[1], '%b %d %Y - %I:%M%p')     
+            home_team = data[4]  # Assuming the home team name is at index 4
+            away_team = data[5]  # Assuming the away team name is at index 5
+            scoreline = f"{data[12]}-{data[13]}"  # Assuming the home and away team goal counts are at indices 12 and 13
+            match = Match(ref=referee, game_date=match_date, venue=stadium, home=home_team, away=away_team, scoreline=scoreline, attendance=attendance, odds_id=index)
+            matches.append(match)
+            odds.append(oddsObject)
+            
+    leagues = [League(league_name="Premier League", country_name="England", founded=datetime.strptime("1992-02-20", '%Y-%m-%d'), total_teams=20, total_games=380)]
+    countries = [Country(c_name=country, leagues_hosted=country == "England" and 1 or 0) for country in countries]
+    referees = [Referee(name=referee, age=random.randint(36, 54), games_reffed=games_reffed) for referee, games_reffed in referees.items()]
     managers = [
-        Manager(name="Jurgen Klopp", age=53, years_managing=20, titles_managed=5),
-        # Manager(name="Pep Guardiola", age=49, years_managing=15, titles_managed=3),
-        # Manager(name="Ole Gunnar Solskjaer", age=47, years_managing=10, titles_managed=1),
         Manager(name="Unai Emery", age=38, years_managing=0, titles_managed=0), # Arsenal
-        Manager(name="Dean Smith", age=45, years_managing=0, titles_managed=0), # Aston Villa
-        Manager(name="Eddie Howe", age=42, years_managing=0, titles_managed=0), # Bournemouth
-        Manager(name="Chris Hughton", age=50, years_managing=0, titles_managed=0), # Brighton
-        Manager(name="Sean Dyche", age=48, years_managing=6, titles_managed=0), # Burnley
-        Manager(name="Maurizio Sarri", age=42, years_managing=0, titles_managed=0), # Chelsea
+        Manager(name="Mauricio Pochettino", age=48, years_managing=0, titles_managed=0), # Tottenham
+        Manager(name="Pep Guardiola", age=49, years_managing=0, titles_managed=0), # Manchester City
+        Manager(name="Brendan Rodgers", age=47, years_managing=0, titles_managed=0), # Leicester
         Manager(name="Roy Hodgson", age=60, years_managing=0, titles_managed=0), # Crystal Palace
         Manager(name="Marco Silva", age=43, years_managing=0, titles_managed=0), # Everton
-        Manager(name="Scott Parker", age=40, years_managing=0, titles_managed=0), # Fulham
-        Manager(name="Jan Siewert", age=38, years_managing=0, titles_managed=0), # Huddersfield
-        Manager(name="Brendan Rodgers", age=47, years_managing=0, titles_managed=0), # Leicester
-        Manager(name="Jurgen Klopp", age=53, years_managing=0, titles_managed=0), # Liverpool
-        Manager(name="Pep Guardiola", age=49, years_managing=0, titles_managed=0), # Manchester City
-        Manager(name="Ole Gunnar Solskjaer", age=47, years_managing=0, titles_managed=0), # Manchester United
-        Manager(name="Rafael Benitez", age=60, years_managing=0, titles_managed=0), # Newcastle
+        Manager(name="Sean Dyche", age=49, years_managing=0, titles_managed=0), # Burnley
         Manager(name="Ralph Hasenhuttl", age=52, years_managing=0, titles_managed=0), # Southampton
-        Manager(name="Mauricio Pochettino", age=48, years_managing=0, titles_managed=0), # Tottenham
-        Manager(name="Javi Gracia", age=50, years_managing=0, titles_managed=0), # Watford
+        Manager(name="Eddie Howe", age=42, years_managing=0, titles_managed=0), # Bournemouth
+        Manager(name="Ole Gunnar Solskjaer", age=47, years_managing=0, titles_managed=0), # Manchester United
+        Manager(name="Jurgen Klopp", age=53, years_managing=0, titles_managed=0), # Liverpool
+        Manager(name="Maurizio Sarri", age=42, years_managing=0, titles_managed=0), # Chelsea
         Manager(name="Manuel Pellegr", age=65, years_managing=0, titles_managed=0), # West Ham
+        Manager(name="Javi Gracia", age=50, years_managing=0, titles_managed=0), # Watford
+        Manager(name="Rafael Benitez", age=60, years_managing=0, titles_managed=0), # Newcastle
+        Manager(name="Neil Warnock", age=70, years_managing=0, titles_managed=0), # Cardiff
+        Manager(name="Scott Parker", age=40, years_managing=0, titles_managed=0), # Fulham
+        Manager(name="Chris Hughton", age=50, years_managing=0, titles_managed=0), # Brighton
+        Manager(name="Jan Siewert", age=38, years_managing=0, titles_managed=0), # Huddersfield
         Manager(name="Nuno Espirito Santo", age=46, years_managing=0, titles_managed=0), # Wolves
-
     ]
-    db.session.add_all(countries + referees)
+    with open('Data/england-premier-league-teams-2018-to-2019-stats.csv', 'r', encoding='utf-8') as file:
+        next(file)
+        for index, line in enumerate(file):
+            data = line.strip().split(',')
+            team = Team(t_name=data[1], 
+                        manager_id=(index + 1),
+                        nationality=data[3],
+                        founded=datetime.strptime("1995-10-23", '%Y-%m-%d'),
+                        total_titles=2,
+                        historical_performance=3,
+                        home_stadium=0,
+                        league_name="Premier League")
+            teams.append(team)
+
+    currIndex = 1
+    for stadiumName, stadiumAttendance in stadiumsSet.items():
+        stadium = Stadium(stadium_id=currIndex, name=stadiumName, seats=stadiumAttendance, founded=datetime.strptime("1995-10-23", '%Y-%m-%d'))
+        stadiums.append(stadium)
+        for match in matches:
+            if match.venue == stadiumName:
+                match.venue = currIndex
+        for team in teams:
+            if team.t_name in stadiumName:
+                team.home_stadium = currIndex
+                break
+            elif team.t_name == "Arsenal" and "Emirates Stadium (London)" == stadiumName:
+                team.home_stadium = currIndex
+            elif team.t_name == "Manchester City" and "Etihad Stadium (Manchester)" == stadiumName:
+                team.home_stadium = currIndex
+            elif team.t_name == "Manchester United" and "Old Trafford (Manchester)" == stadiumName:
+                team.home_stadium = currIndex
+            elif team.t_name == "Leicester City" and "King Power Stadium (Leicester- Leicestershire)" == stadiumName:
+                team.home_stadium = currIndex
+            elif team.t_name == "Crystal Palace" and "Selhurst Park (London)" == stadiumName:
+                team.home_stadium = currIndex
+            elif team.t_name == "Everton" and "Goodison Park (Liverpool)" == stadiumName:
+                team.home_stadium = currIndex
+            elif team.t_name == "AFC Bournemouth" and "Vitality Stadium (Bournemouth- Dorset)" == stadiumName:
+                team.home_stadium = currIndex
+            elif team.t_name == "Chelsea" and "Stamford Bridge (London)" == stadiumName:
+                team.home_stadium = currIndex
+            elif team.t_name == "West Ham United" and "London Stadium (London)" == stadiumName:
+                team.home_stadium = currIndex
+            elif team.t_name == "Newcastle United" and "St. James' Park (Newcastle upon Tyne)" == stadiumName:
+                team.home_stadium = currIndex
+            elif team.t_name == "Fulham" and "Craven Cottage (London)" == stadiumName:
+                team.home_stadium = currIndex
+            elif team.t_name == "Brighton & Hove Albion" and "The American Express Community Stadium (Falmer- East Sussex)" == stadiumName:
+                team.home_stadium = currIndex
+            elif team.t_name == "Huddersfield Town" and "John Smith's Stadium (Huddersfield- West Yorkshire)" == stadiumName:
+                team.home_stadium = currIndex
+            elif team.t_name == "Wolverhampton Wanderers" and "Molineux Stadium (Wolverhampton- West Midlands)" == stadiumName:
+                team.home_stadium = currIndex
+        currIndex += 1 
+
+    db.session.add_all(leagues + countries + referees + managers + stadiums + teams + matches + odds + stats + players)
     db.session.commit()

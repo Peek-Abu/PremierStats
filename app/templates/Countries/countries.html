@@ -2,52 +2,54 @@
 
 {% block content %}
 <div class="container">
-  <h2>Countries</h2>
-  <table class="table show-all">
-      <thead>
-          <tr>
-              <th>Country Name</th>
-              <th>Leagues Hosted</th>
-          </tr>
-      </thead>
-      <tbody>
-          {% for country in countries %}
-          <tr>
-              <td>
-                  {{ country.c_name }}
-              </td>
-              <td>{{ country.leagues_hosted }}</td>
-              <td>
-                  {% set item = country %}
-                  {% set actions = {
-                        'view': url_for('countries.country_details', c_name=country.c_name),
-                        'edit': url_for('countries.country_edit', c_name=country.c_name),
-                        'delete': url_for('countries.delete_country', c_name=country.c_name)
-                  } %}
-                  {% include 'Components/side_table.html' %}
-              </td>
-          </tr>
-          {% endfor %}
-      </tbody>
-  </table>
-  <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addCountryForm" aria-expanded="false" aria-controls="addCountryForm">
-      Add Country
-  </button>
-  
-  <div class="collapse" id="addCountryForm">
-      <div class="card card-body">
-          <form action="/add_country" method="post">
-              <div class="mb-3">
-                  <label for="c_name" class="form-label">Country Name:</label>
-                  <input type="text" class="form-control" id="c_name" name="c_name" required>
-              </div>
-              <div class="mb-3">
-                  <label for="leagues_hosted" class="form-label">Leagues Hosted:</label>
-                  <input type="number" class="form-control" id="leagues_hosted" name="leagues_hosted" required>
-              </div>
-              <button type="submit" class="btn btn-success">Add Country</button>
-          </form>
-      </div>
-  </div>
+    <h2>Countries</h2>
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addCountryForm"
+        aria-expanded="false" aria-controls="addCountryForm">
+        Add Country
+    </button>
+
+    <div class="collapse" id="addCountryForm">
+        <div class="card card-body">
+            <form action="/add_country" method="post">
+                <div class="mb-3">
+                    <label for="c_name" class="form-label">Country Name:</label>
+                    <input type="text" class="form-control" id="c_name" name="c_name" required>
+                </div>
+                <div class="mb-3">
+                    <label for="leagues_hosted" class="form-label">Leagues Hosted:</label>
+                    <input type="number" class="form-control" id="leagues_hosted" name="leagues_hosted" required>
+                </div>
+                <button type="submit" class="btn btn-success">Add Country</button>
+            </form>
+        </div>
+    </div>
+    <table class="table show-all">
+        <thead>
+            <tr>
+                <th>Country Name</th>
+                <th>Leagues Hosted</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for country in countries %}
+            <tr>
+                <td>
+                    {{ country.c_name }}
+                </td>
+                <td>{{ country.leagues_hosted }}</td>
+                <td>
+                    {% set item = country %}
+                    {% set actions = {
+                    'view': url_for('countries.country_details', c_name=country.c_name),
+                    'edit': url_for('countries.country_edit', c_name=country.c_name),
+                    'delete': url_for('countries.delete_country', c_name=country.c_name)
+                    } %}
+                    {% include 'Components/side_table.html' %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
 </div>
 {% endblock %}
