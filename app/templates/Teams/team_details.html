@@ -29,7 +29,6 @@
     </div>
     {% set actions = {
         'edit': url_for('teams.team_edit', team_name=team.t_name),
-        'delete': url_for('teams.delete_team', t_name=team.t_name)
     } %}
     {% include 'Components/side_table.html' %}
 </div>

@@ -10,16 +10,15 @@ def createPlayer():
     position = request.form['position']
     age = request.form['age']
     team_name = request.form['team_name']
-    player_stats = request.form['player_stats']
-
+    player_stats = request.form
     # Insert into stats
-    goals = player_stats['goals']
-    appearances = player_stats['appearances']
-    assists = player_stats['assists']
+    goals = request.form['goals']
+    appearances = request.form['appearances']
+    assists = request.form['assists']
     stats = Stats(goals=goals, appearances=appearances, assists=assists)
     db.session.add(stats)
     db.session.commit()
-
+    print(stats.stats_id)
     new_player = Player(p_name=p_name, nationality=nationality, position=position, age=age, team_name=team_name,
                         player_stats=stats.stats_id)
     db.session.add(new_player)
@@ -42,13 +41,11 @@ def updatePlayer(player_id):
     player.position = request.form['position']
     player.age = request.form['age']
     player.team_name = request.form['team_name']
-    player.player_stats = request.form['player_stats']
-
     # Update stats if necessary
-    goals = request.form['player_stats']['goals']
-    appearances = request.form['player_stats']['appearances']
-    assists = request.form['player_stats']['assists']
-    stats = Stats.query.get_or_404(player)
+    goals = request.form['goals']
+    appearances = request.form['appearances']
+    assists = request.form['assists']
+    stats = Stats.query.get_or_404(player.player_stats)
     if goals:
         stats.goals = goals
     if appearances:

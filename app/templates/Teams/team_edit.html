@@ -38,9 +38,5 @@
         </div>
         <button type="submit" class="btn btn-primary">Update Team</button>
     </form>
-    {% set actions = {
-        'delete': url_for('teams.delete_team', t_name=team.t_name)
-    } %}
-    {% include 'Components/side_table.html' %}
 </div>
 {% endblock %}
